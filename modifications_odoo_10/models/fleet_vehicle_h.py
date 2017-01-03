@@ -50,9 +50,6 @@ class FleetVehicle(models.Model):
                         FROM fleet_vehicle vehicle
                         WHERE ''' + string, (value,))
                         
-        print '''SELECT vehicle.id
-                        FROM fleet_vehicle vehicle
-                        WHERE ''' + string
         res_ids = [x[0] for x in self.env.cr.fetchall()]
         res.append(('id', search_operator, res_ids))
         return res
