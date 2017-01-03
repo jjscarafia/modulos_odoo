@@ -11,8 +11,6 @@
             </field>
             <field name="parent_id" position="replace">
                 <field name="driver_license"/>
-            </field>
-            <field name="coach_id" position="replace">
                 <field name="vehicle_color"/>
             </field>
         </field>
