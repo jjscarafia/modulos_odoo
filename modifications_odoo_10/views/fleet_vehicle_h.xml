@@ -10,4 +10,44 @@
             </field>
         </field>
     </record>
+    
+    <record model="ir.ui.view" id="view_fleet_vehicle_inherit_kanban">
+        <field name="name">fleet.vehicle.kanban.inherited</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='kanban-box']//div[contains(@class, 'oe_kanban_details')]" position="replace">
+                <strong>
+                    <field name="license_plate"/> : <field name="model_id"/>
+                </strong>
+                <ul>
+                    <li>
+                        <t t-if="record.employee_id.raw_value"><field name="employee_id"/></t>
+                    </li>
+                    <li>
+                        <t t-if="record.location.raw_value"><field name="location"/></t>
+                    </li>
+                </ul>
+                <div class="o_kanban_button">
+                    <a t-if="record.contract_renewal_due_soon.raw_value and !record.contract_renewal_overdue.raw_value" data-type="object" data-name="return_action_to_open" href="#" class="oe_kanban_action btn btn-sm btn-warning" data-context='{"xml_id":"fleet_vehicle_log_contract_action"}'>
+                        <field name="contract_renewal_name"/> <t t-if="record.contract_renewal_total.raw_value > 0"> and <field name="contract_renewal_total" /> other(s)</t>
+                    </a>
+                    <a t-if="record.contract_renewal_overdue.raw_value" data-type="object" data-name="return_action_to_open" href="#" class="oe_kanban_action btn btn-sm btn-danger" data-context='{"xml_id":"fleet_vehicle_log_contract_action"}'>
+                        <field name="contract_renewal_name"/> <t t-if="record.contract_renewal_total.raw_value > 0"> and <field name="contract_renewal_total" /> other(s)</t>
+                    </a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_fleet_vehicle_inherit_tree">
+        <field name="name">fleet.vehicle.inherit.tree</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="driver_id" position="replace">
+                <field name="employee_id"/>
+            </field>
+        </field>
+    </record>
 </odoo>
