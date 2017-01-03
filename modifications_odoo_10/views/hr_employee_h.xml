@@ -13,6 +13,8 @@
                 <field name="driver_license"/>
                 <field name="vehicle_color"/>
             </field>
+            <!--<field name="coach_id" position="replace">
+            </field>-->
         </field>
     </record>
 </odoo>
