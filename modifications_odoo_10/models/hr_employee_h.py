@@ -30,3 +30,8 @@ class Employee(models.Model):
     vehicle_color = fields.Char('Vehicle color', help='Vehicle color')
     airport_ids = fields.Many2many('hr.airport', 'employee_airport_rel', 'emp_id', 'airport_id', string='Airports')
     language_ids = fields.Many2many('hr.language', 'employee_language_rel', 'emp_id', 'language_id', string='Language')
+    city_id = fields.Many2one('hr.city', string='City')
+    landline_number = fields.Char('Landline Number', help='Landline Number')
+    whatsapp_number = fields.Char('WhatsApp Number', help='WhatsApp Number')
+    plate_number = fields.Char('Plate Number', help='Plate Number')
+    car_insurance_number = fields.Char('Car Insurance Number', help='Car Insurance Number')

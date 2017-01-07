@@ -10,3 +10,7 @@ access_hr_employee_airport_manager,hr.employee.airport.manager,model_hr_airport,
 access_hr_employee_language_user,hr.employee.language.user,model_hr_language,hr.group_hr_user,1,0,0,0
 access_hr_employee_language_group,hr.employee.language.group,model_hr_language,base.group_user,1,0,0,0
 access_hr_employee_language_manager,hr.employee.language.manager,model_hr_language,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_city_user,hr.employee.city.user,model_hr_city,hr.group_hr_user,1,0,0,0
+access_hr_employee_city_group,hr.employee.city.group,model_hr_city,base.group_user,1,0,0,0
+access_hr_employee_city_manager,hr.employee.city.manager,model_hr_city,hr.group_hr_manager,1,1,1,1

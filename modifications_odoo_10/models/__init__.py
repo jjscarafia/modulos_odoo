@@ -6,3 +6,4 @@ import hr_employee_h
 import fleet_vehicle_h
 import hr_airports
 import hr_languages
+import hr_city

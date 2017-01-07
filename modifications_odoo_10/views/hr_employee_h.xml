@@ -10,12 +10,35 @@
                 <field name="vehicle_model"/>
             </field>
             <field name="parent_id" position="replace">
-                <field name="driver_license"/>
                 <field name="vehicle_color"/>
-                <field name="airport_ids" widget="many2many_tags"/>
+                <field name="plate_number"/>
+                <field name="car_insurance_number"/>
             </field>
-            <!--<field name="coach_id" position="replace">
-            </field>-->
+            <field name="coach_id" position="replace">
+            </field>
+            
+            <field name="mobile_phone" position="replace">
+            </field>
+            <field name="work_location" position="replace">
+            </field>
+            <field name="work_email" position="replace">
+            </field>
+            <field name="work_phone" position="replace">
+            </field>
+            
+            <field name="calendar_id" position="replace">
+            </field>
+            
+            <field name="address_id" position="after">
+                <field name="city_id"/>
+                <field name="airport_ids" widget="many2many_tags"/>
+                <field name="mobile_phone" string="Mobile number"/>
+                <field name="work_email" string="Email address"/>
+                <field name="landline_number"/>
+                <field name="whatsapp_number"/>
+                <field name="driver_license"/>
+                <field name="calendar_id"/>
+            </field>
             
             <xpath expr="//form/sheet/notebook/page/group/group[2]" position = "attributes">
                 <attribute name="string"></attribute>
