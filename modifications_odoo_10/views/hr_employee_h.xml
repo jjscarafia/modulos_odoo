@@ -5,6 +5,9 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
+            <field name="coach_id" position="replace">
+            </field>
+            
             <field name="job_id" position="after">
                 <field name="vehicle_type"/>
                 <field name="vehicle_model"/>
@@ -13,8 +16,6 @@
                 <field name="vehicle_color"/>
                 <field name="plate_number"/>
                 <field name="car_insurance_number"/>
-            </field>
-            <field name="coach_id" position="replace">
             </field>
             
             <field name="mobile_phone" position="replace">
