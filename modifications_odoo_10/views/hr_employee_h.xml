@@ -40,8 +40,12 @@
                 <field name="calendar_id"/>
             </field>
             
-            <xpath expr="//form/sheet/notebook/page/group/group[2]" position = "attributes">
+            <xpath expr="//form/sheet/notebook/page[@name='public']/group/group[2]" position = "attributes">
                 <attribute name="string"></attribute>
+            </xpath>
+            
+            <xpath expr="//form/sheet/notebook/page[@name='public']/group/group[1]" position = "attributes">
+                <attribute name="string">Work Information</attribute>
             </xpath>
             
             <xpath expr="//form/sheet/notebook/page[@name='public']" position = "attributes">
