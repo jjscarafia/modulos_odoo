@@ -8,12 +8,12 @@
             <!--<field name="coach_id" position="replace">
             </field>-->
             
-            <!--<field name="coach_id" position="attributes">
+            <field name="coach_id" position="attributes">
                 <attribute name="invisible">True</attribute>
-            </field>-->
+            </field>
             
-            <xpath expr="//form/sheet/notebook/page[@name='public']/group/group[2]/field[@name='coach_id']" position = "replace">
-            </xpath>
+            <!--<xpath expr="//form/sheet/notebook/page[@name='public']/group/group[2]/field[@name='coach_id']" position = "replace">
+            </xpath>-->
             
             <field name="job_id" position="after">
                 <field name="vehicle_type"/>
