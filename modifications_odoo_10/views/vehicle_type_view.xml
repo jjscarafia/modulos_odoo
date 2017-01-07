@@ -10,6 +10,7 @@
                         <page string="Vehicle Type">
                             <group>
                                 <field name="vehicle_type_name" />
+                                <field name="vehicle_type_code" />
                                 <field name="vehicle_type_description" />
                             </group>
                         </page>>
@@ -25,6 +26,7 @@
         <field name="arch" type="xml">
             <tree string="Vehicle Types">
                 <field name="vehicle_type_name" />
+                <field name="vehicle_type_code" />
                 <field name="vehicle_type_description" />
             </tree>
         </field>

@@ -17,4 +17,5 @@ class VehicleType(models.Model):
     _rec_name = "vehicle_type_name"
     
     vehicle_type_name = fields.Char('Vehicle type name', help='Vehicle type name')
-    vehicle_type_description = fields.Char('Vehicle type description', help='Vehicle type description')
+    vehicle_type_code = fields.Char('Vehicle type code', help='Vehicle type code')
+    vehicle_type_description = fields.Text('Vehicle type description', help='Vehicle type description')
