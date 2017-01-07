@@ -20,6 +20,9 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/hr_employee_h.xml',
         'views/fleet_vehicle_h.xml',
         'views/menu_h.xml',
+        'views/vehicle_type_view.xml',
+        'views/airport_view.xml',
+        'views/languages_view.xml',
         'security/ir.model.access.csv',
     ],
     'qweb': [

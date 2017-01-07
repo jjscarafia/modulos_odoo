@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='hr_vehicle_type_model_view_form' model='ir.ui.view'>
+        <field name="name">hr.vehicle.type.form</field>
+        <field name="model">hr.vehicle.type</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Type">
+                <sheet>
+                    <notebook>
+                        <page string="Vehicle Type">
+                            <group>
+                                <field name="vehicle_type_name" />
+                                <field name="vehicle_type_description" />
+                            </group>
+                        </page>>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='hr_vehicle_type_model_view_tree' model='ir.ui.view'>
+        <field name="name">hr.vehicle.type.tree</field>
+        <field name="model">hr.vehicle.type</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Types">
+                <field name="vehicle_type_name" />
+                <field name="vehicle_type_description" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='hr_vehicle_type_action' model='ir.actions.act_window'>
+        <field name="name">Vehicle Type</field>
+        <field name="res_model">hr.vehicle.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new vehicle type.
+          </p>
+        </field>
+    </record>
+            
+    <menuitem
+        id="menu_hr_vehicle_type"
+        name="Vehicle Types"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees_general"
+        action="hr_vehicle_type_action"
+        sequence="75"/>
+</odoo>

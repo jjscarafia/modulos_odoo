@@ -1,4 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hr_employee_vehicle_type_user,hr.employee.vehicle.type.user,model_hr_vehicle_type,hr.group_hr_user,1,1,1,1
+access_hr_employee_vehicle_type_user,hr.employee.vehicle.type.user,model_hr_vehicle_type,hr.group_hr_user,1,0,0,0
 access_hr_employee_vehicle_type_group,hr.employee.vehicle.type.group,model_hr_vehicle_type,base.group_user,1,0,0,0
 access_hr_employee_vehicle_type_manager,hr.employee.vehicle.type.manager,model_hr_vehicle_type,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_airport_user,hr.employee.airport.user,model_hr_airport,hr.group_hr_user,1,0,0,0
+access_hr_employee_airport_group,hr.employee.airport.group,model_hr_airport,base.group_user,1,0,0,0
+access_hr_employee_airport_manager,hr.employee.airport.manager,model_hr_airport,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_language_user,hr.employee.language.user,model_hr_language,hr.group_hr_user,1,0,0,0
+access_hr_employee_language_group,hr.employee.language.group,model_hr_language,base.group_user,1,0,0,0
+access_hr_employee_language_manager,hr.employee.language.manager,model_hr_language,hr.group_hr_manager,1,1,1,1

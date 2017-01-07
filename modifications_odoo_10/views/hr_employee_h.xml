@@ -12,13 +12,25 @@
             <field name="parent_id" position="replace">
                 <field name="driver_license"/>
                 <field name="vehicle_color"/>
+                <field name="airport_ids" widget="many2many_tags"/>
             </field>
             <!--<field name="coach_id" position="replace">
             </field>-->
             
+            <xpath expr="//form/sheet/notebook/page/group/group[2]" position = "attributes">
+                <attribute name="string"></attribute>
+            </xpath>
+            
             <xpath expr="//form/sheet/notebook/page[@name='public']" position = "attributes">
                 <attribute name="string">Work information</attribute>
             </xpath>
+            
+            <xpath expr="//form/sheet/notebook/page[@name='public']" position = "before">
+                <page name="languages" string="Languages">
+                    <field name="language_ids" widget="many2many_tags"/>
+                </page>
+            </xpath>
+            
         </field>
     </record>
 </odoo>

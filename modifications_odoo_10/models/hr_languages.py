@@ -11,10 +11,10 @@ from odoo.modules.module import get_module_resource
 
 _logger = logging.getLogger(__name__)
 
-class VehicleType(models.Model):
-    _name = "hr.vehicle.type"
-    _description = "Vehicle Type"
-    _rec_name = "vehicle_type_name"
+class language(models.Model):
+    _name = "hr.language"
+    _description = "Language"
+    _rec_name = "name"
     
-    vehicle_type_name = fields.Char('Vehicle type name', help='Vehicle type name')
-    vehicle_type_description = fields.Char('Vehicle type description', help='Vehicle type description')
+    name = fields.Char('Language name', help='Language name')
+    employee_ids = fields.Many2many('hr.employee', 'employee_language_rel', 'language_id', 'emp_id', string='Employees')

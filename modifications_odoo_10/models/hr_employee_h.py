@@ -28,3 +28,5 @@ class Employee(models.Model):
     vehicle_model = fields.Char('Vehicle model', help='Vehicle model')
     driver_license = fields.Char('Driver license', help='Driver license')
     vehicle_color = fields.Char('Vehicle color', help='Vehicle color')
+    airport_ids = fields.Many2many('hr.airport', 'employee_airport_rel', 'emp_id', 'airport_id', string='Airports')
+    language_ids = fields.Many2many('hr.language', 'employee_language_rel', 'emp_id', 'language_id', string='Language')
