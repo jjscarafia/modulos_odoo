@@ -53,7 +53,7 @@
             </xpath>
             
             <xpath expr="//form/sheet/notebook/page[@name='public']/group/group[1]" position = "attributes">
-                <attribute name="string">Work Information</attribute>
+                <attribute name="string"></attribute>
             </xpath>
             
             <xpath expr="//form/sheet/notebook/page[@name='public']" position = "attributes">
