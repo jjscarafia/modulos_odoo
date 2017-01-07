@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="name">Self Employees</field>
+    </record>
+    
+    <record model="ir.ui.menu" id="hr.menu_open_view_employee_list_my">
+        <field name="name">Self Employees</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="hr.open_view_employee_list_my">
+        <field name="name">Self Employees</field>
+    </record>
+</odoo>
