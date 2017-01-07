@@ -11,4 +11,12 @@
     <record model="ir.actions.act_window" id="hr.open_view_employee_list_my">
         <field name="name">Self Employees</field>
     </record>
+    
+    <menuitem
+        id="menu_hr_vehicle_type"
+        name="Vehicle Types"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="hr.menu_open_view_employee_list_my"
+        web_icon="hr,static/description/icon.png"
+        sequence="75"/>
 </odoo>
