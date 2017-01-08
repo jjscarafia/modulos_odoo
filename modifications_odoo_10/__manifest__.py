@@ -3,7 +3,7 @@
 
 {
     'name': 'Modifications Odoo 10',
-    'depends': ['base','hr','fleet'],
+    'depends': ['base','hr','fleet','crm'],
     'description': """
 Assets management
 =================
@@ -24,6 +24,9 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/airport_view.xml',
         'views/languages_view.xml',
         'views/city_view.xml',
+        'views/resource_calendar_view.xml',
+        'views/res_partner_h.xml',
+        'views/crm_lead_h.xml',
         'security/ir.model.access.csv',
     ],
     'qweb': [

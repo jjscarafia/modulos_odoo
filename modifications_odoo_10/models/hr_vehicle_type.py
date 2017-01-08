@@ -14,8 +14,8 @@ _logger = logging.getLogger(__name__)
 class VehicleType(models.Model):
     _name = "hr.vehicle.type"
     _description = "Vehicle Type"
-    _rec_name = "vehicle_type_name"
+    _rec_name = "name"
     
-    vehicle_type_name = fields.Char('Vehicle type name', help='Vehicle type name')
+    name = fields.Char('Vehicle type name', help='Vehicle type name')
     vehicle_type_code = fields.Char('Vehicle type code', help='Vehicle type code')
     vehicle_type_description = fields.Text('Vehicle type description', help='Vehicle type description')

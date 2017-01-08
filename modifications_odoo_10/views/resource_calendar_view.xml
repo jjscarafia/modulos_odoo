@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='hr_resource_calendar_alt_action' model='ir.actions.act_window'>
+        <field name="name">Resource Calendar</field>
+        <field name="res_model">resource.calendar</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new resource calendar.
+          </p>
+        </field>
+    </record>
+            
+    <menuitem
+        id="menu_hr_resource_calendar_alt"
+        name="Working Time"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees_general"
+        action="hr_resource_calendar_alt_action"
+        sequence="75"/>
+</odoo>

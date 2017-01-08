@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record model="ir.ui.view" id="view_hr_employee_inherit_form">
-        <field name="name">hr.employee.inherit.form</field>
-        <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+    <record model="ir.ui.view" id="view_res_partner_alt_inherit_form">
+        <field name="name">res.partner.inherit.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!--<field name="coach_id" position="replace">
-            </field>-->
             
+            <xpath expr="//form/sheet/notebook/page[1]" position = "replace">
+            </xpath>
+            
+            <field name="fax" position="replace">
+            </field>
+            
+            <!--
             <field name="coach_id" position="attributes">
                 <attribute name="invisible">True</attribute>
             </field>
-            
-            <!--<xpath expr="//form/sheet/notebook/page[@name='public']/group/group[2]/field[@name='coach_id']" position = "replace">
-            </xpath>-->
             
             <field name="job_id" position="after">
                 <field name="vehicle_type"/>
@@ -38,7 +40,6 @@
             </field>
             
             <field name="address_id" position="replace">
-                <field name="work_location" string="Location"/>
                 <field name="city_id"/>
                 <field name="airport_ids" widget="many2many_tags"/>
                 <field name="mobile_phone" string="Mobile number"/>
@@ -66,6 +67,7 @@
                     <field name="language_ids" widget="many2many_tags"/>
                 </page>
             </xpath>
+            -->
             
         </field>
     </record>
