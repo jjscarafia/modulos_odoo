@@ -35,7 +35,9 @@ class Lead(models.Model):
     vehicle_color = fields.Char('Vehicle color', compute='_get_data_employee')
     plate_number = fields.Char('Plate number', compute='_get_data_employee')
     car_insurance_number = fields.Char('Car insurance number', compute='_get_data_employee')
-    name = fields.Char('Product', required=True, index=True)
+    #name = fields.Char('Product', required=True, index=True)
+    
+    product_id = fields.Many2one('product.template', string='Product')
     
     date_and_time = fields.Datetime('Date and Time')
     
