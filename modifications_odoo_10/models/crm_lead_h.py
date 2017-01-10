@@ -11,6 +11,15 @@ from odoo.modules.module import get_module_resource
 
 _logger = logging.getLogger(__name__)
 
+PRIORITIES = [
+    ('0', 'Normal'),
+    ('1', 'Low'),
+    ('2', 'High'),
+    ('3', 'Very High'),
+    ('4', 'So High'),
+    ('4', 'Completely High'),
+]
+
 class Lead(models.Model):
     _name = "crm.lead"
     _description = "Lead/Opportunity"
@@ -28,9 +37,15 @@ class Lead(models.Model):
     car_insurance_number = fields.Char('Car insurance number', compute='_get_data_employee')
     name = fields.Char('Product', required=True, index=True)
     
+    date_and_time = fields.Datetime('Date and Time')
+    
+    journey = fields.Char('Journey')
+    
     employee_id = fields.Many2one('hr.employee', string='Driver')
     
     customer_id = fields.Many2one('res.partner', string='Customer')
+    
+    priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
     
     def _get_data_employee(self):
         for record in self:

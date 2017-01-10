@@ -96,4 +96,25 @@
             
         </field>
     </record>
+    
+    <record model="ir.ui.view" id="view_create_opportunity_simplified_alt_inherit_form">
+        <field name="name">crm.lead.inherit.form.simple</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_create_opportunity_simplified"/>
+        <field name="arch" type="xml">
+            
+            <field name="partner_id" position="replace">
+                <field name="customer_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
+                <field name="employee_id"/>
+                <field name="date_and_time"/>
+                <field name="journey"/>
+            </field>
+            
+            <field name="name" position = "attributes">
+                <attribute name="string">Product</attribute>
+            </field>
+            
+        </field>
+    </record>
+    
 </odoo>
