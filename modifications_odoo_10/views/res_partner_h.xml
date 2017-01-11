@@ -11,6 +11,8 @@
             
             <field name="fax" position="replace">
             </field>
+            <field name="function" position="replace">
+            </field>
             
             <!--
             <field name="coach_id" position="attributes">
