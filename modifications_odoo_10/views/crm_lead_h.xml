@@ -11,9 +11,11 @@
             </xpath>
             
             <field name="partner_id" position="replace">
-				<field name="id" string="Correlative" readonly="1"/>
+				<field name="id_number" readonly="1"/>
                 <field name="product_id"/>
                 <field name="customer_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
+                <field name="date_and_time"/>
+                <field name="journey"/>
             </field>
             
             <field name="partner_name" position="after">
@@ -130,28 +132,28 @@
 					<field name="tag_ids"/>
 				</div>
 				<div>
-					<strong><field name="id" string="Correlative" readonly="1"/></strong>
+					<strong><field name="id_number" readonly="1"/></strong>
 				</div>
 				<div>
-					<strong><field name="name"/></strong>
+					<strong>Opportunity: </strong><field name="name"/>
 				</div>
 				<div>
-					<strong><field name="product_id"/></strong>
+					<strong>Product: </strong><field name="product_id"/>
 				</div>
 				<div>
-					<strong><field name="customer_id"/></strong>
+					<strong>Customer: </strong><field name="customer_id"/>
 				</div>
 				<div>
-					<strong><field name="employee_id"/></strong>
+					<strong>Driver: </strong><field name="employee_id"/>
 				</div>
 				<div>
-					<strong><field name="date_and_time"/></strong>
+					<strong>Date and Time: </strong><field name="date_and_time"/>
 				</div>
 				<div>
-					<strong><field name="journey"/></strong>
+					<strong>Journey: </strong><field name="journey"/>
 				</div>
 				<div class="text-muted">
-					<t t-if="record.planned_revenue.raw_value"><field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/><span t-if="record.partner_id.value">,</span></t> <span t-if="record.partner_id.value"> <t t-esc="record.partner_id.value"/></span>
+					<strong>Expected Revenue: </strong><t t-if="record.planned_revenue.raw_value"><field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/></t>
 				</div>
 
 				<div class="o_kanban_footer">
@@ -175,5 +177,19 @@
             </xpath>
         </field>
     </record>
+    
+    <record id="view_crm_case_opportunities_filter_inherit_filter" model="ir.ui.view">
+		<field name="name">crm.lead.search.opportunity.inherit</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+		<field name="arch" type="xml">
+			<xpath expr="field[@name='name']" position="before">
+                <field name="id_number" string="ID number" filter_domain="[('id_number','ilike',self)]"/>
+            </xpath>
+			<!--<field name="name" position="before">
+				<field name="id_number" string="ID number" filter_domain="[('id_number','ilike',self)]"/>
+			</field>-->
+		</field>
+	</record>
     
 </odoo>

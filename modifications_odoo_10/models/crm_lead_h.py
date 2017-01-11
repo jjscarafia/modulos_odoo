@@ -17,7 +17,7 @@ PRIORITIES = [
     ('2', 'High'),
     ('3', 'Very High'),
     ('4', 'So High'),
-    ('4', 'Completely High'),
+    ('5', 'Completely High'),
 ]
 
 class Lead(models.Model):
@@ -48,6 +48,37 @@ class Lead(models.Model):
     customer_id = fields.Many2one('res.partner', string='Customer')
     
     priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
+    
+    id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=True)
+    
+    def _get_data_id_number(self):
+        for record in self:
+            if record.id:
+                record.id_number = "ID-" + str(record.id)
+                
+    def _search_data_id_number(self, operator, value):
+        res = []
+        assert operator in ('=', '!=', '<>', 'ilike', 'not ilike'), 'Operation not supported'
+        if operator in ('=', 'ilike'):
+            search_operator = 'in'
+        elif operator in ('<>', '!=', 'not ilike'):
+            search_operator = 'not in'
+        
+        if value == False:
+            string = ''' crm.id_number ''' + operator + ''' NULL ''' + \
+                        ''' or crm.id_number ''' + operator + """ '' """
+        else:
+            string = ''' crm.id_number ''' + operator + ''' %s '''
+            if operator in ('ilike', 'not ilike'):
+                value = '%' + value + '%'
+        
+        self.env.cr.execute('''SELECT crm.id
+                        FROM crm_lead crm
+                        WHERE ''' + string, (value,))
+                        
+        res_ids = [x[0] for x in self.env.cr.fetchall()]
+        res.append(('id', search_operator, res_ids))
+        return res
     
     def _get_data_employee(self):
         for record in self:
