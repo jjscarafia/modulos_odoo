@@ -102,8 +102,7 @@
 							context="{'company_id': parent.company_id}"
 							groups="product.group_uom" options='{"no_open": True}'/>
 						<field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
-						<field name="price_unit" invisible="1"/>
-						<field name="price_unit_to_show"/>
+						<field name="price_unit" />
 						<field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
 							/>
 						<field name="discount" groups="sale.group_discount_per_so_line"/>
