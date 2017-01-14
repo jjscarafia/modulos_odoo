@@ -8,3 +8,5 @@ import hr_airports
 import hr_languages
 import hr_city
 import crm_lead_h
+import sale_order_h
+import sale_order_line_h

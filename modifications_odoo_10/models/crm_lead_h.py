@@ -45,11 +45,21 @@ class Lead(models.Model):
     
     employee_id = fields.Many2one('hr.employee', string='Driver')
     
-    customer_id = fields.Many2one('res.partner', string='Customer')
+    #customer_id = fields.Many2one('res.partner', string='Customer')
+    customer_email = fields.Char('Customer email', compute='_get_data_customer')
+    customer_mobile = fields.Char('Customer mobile', compute='_get_data_customer')
     
     priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
     
     id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=True)
+    
+    flight_number = fields.Char('Flight number')
+    
+    destination_address = fields.Text('Destination address')
+    
+    dest_date_and_time = fields.Datetime('Destination date and time')
+    
+    products_text = fields.Text('Products')
     
     def _get_data_id_number(self):
         for record in self:
@@ -107,6 +117,18 @@ class Lead(models.Model):
             self.vehicle_color = self.employee_id.vehicle_color
             self.plate_number = self.employee_id.plate_number
             self.car_insurance_number = self.employee_id.car_insurance_number
+            
+    def _get_data_customer(self):
+        for record in self:
+            if record.partner_id:
+                record.customer_email = record.partner_id.email
+                record.customer_mobile = record.partner_id.mobile
+    
+    @api.onchange('partner_id') # if these fields are changed, call method
+    def check_change_customer(self):
+        if self.partner_id:
+            self.customer_email = self.partner_id.email
+            self.customer_mobile = self.partner_id.mobile
 
     """
     location = fields.Char(string="Location", help='Location of the vehicle (garage, ...)', 

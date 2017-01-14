@@ -10,12 +10,19 @@
                 <attribute name="string">Driver assigned</attribute>
             </xpath>
             
-            <field name="partner_id" position="replace">
+            <field name="partner_id" position="before">
 				<field name="id_number" readonly="1"/>
                 <field name="product_id"/>
-                <field name="customer_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
-                <field name="date_and_time"/>
+            </field>
+            
+            <field name="partner_id" position="after">
+				<field name="date_and_time"/>
                 <field name="journey"/>
+            </field>
+            
+            <field name="partner_id" position = "attributes">
+				<attribute name="domain">[('customer','=',1), ('parent_id', '=', False)]</attribute>
+				<attribute name="context"></attribute>
             </field>
             
             <field name="partner_name" position="after">
@@ -40,6 +47,38 @@
             
             <field name="mobile" position="replace">
             </field>
+            
+            <field name="email_from" position="replace">
+                <field name="customer_email"/>
+            </field>
+            
+            <field name="phone" position="replace">
+                <field name="customer_mobile"/>
+            </field>
+            
+            <field name="user_id" position="before">
+                <field name="flight_number"/>
+            </field>
+            
+            <field name="user_id" position="attributes">
+                <attribute name="string">Booking Supplier</attribute>
+            </field>
+            
+            <!--<field name="date_deadline" position="replace">
+                <field name="destination_address"/>
+            </field>-->
+            
+            <xpath expr="//form/sheet/group/group[2]" position = "replace">
+				<group>
+					<field name="products_text"/>
+					<field name="destination_address"/>
+					<field name="dest_date_and_time"/>
+				</group>
+            </xpath>
+            
+            <!--<field name="next_activity_id" position="replace">
+                <field name="product_id"/>
+            </field>-->
             
             <!--
             <field name="coach_id" position="attributes">
@@ -109,7 +148,7 @@
             
             <field name="partner_id" position="replace">
                 <field name="product_id"/>
-                <field name="customer_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
+                <field name="partner_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
                 <field name="employee_id"/>
                 <field name="date_and_time"/>
                 <field name="journey"/>
@@ -141,7 +180,7 @@
 					<strong>Product: </strong><field name="product_id"/>
 				</div>
 				<div>
-					<strong>Customer: </strong><field name="customer_id"/>
+					<strong>Customer: </strong><field name="partner_id"/>
 				</div>
 				<div>
 					<strong>Driver: </strong><field name="employee_id"/>
