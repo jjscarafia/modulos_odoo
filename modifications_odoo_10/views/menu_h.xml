@@ -12,11 +12,17 @@
         <field name="name">Self Employees</field>
     </record>
 
-    <menuitem
-        id="menu_config_employees_general"
+	<menuitem
+        id="menu_config_employees"
         name="Config Employees"
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
         parent="hr.menu_hr_root"
+        sequence="75"/>
+    <menuitem
+        id="menu_config_employees_general"
+        name="Config"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees"
         sequence="75"/>
 
 </odoo>
