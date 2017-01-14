@@ -82,16 +82,17 @@
 						<field name="sequence" widget="handle"/>
 						<field name="product_id"
 							attrs="{'readonly': [('procurement_ids', '!=', [])]}"
-							context="{'partner_id':parent.partner_id, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+							context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
 						   />
 						<field name="layout_category_id" groups="sale.group_sale_layout"/>
 						<!--<field name="name"/>-->
 						<field name="journey"/>
-						<!--<field name="product_uom_qty"
+						<field name="product_uom_qty"
 							string="Ordered Qty"
 							context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+							invisible="1"
 						/>
-						<field name="qty_delivered" invisible="context.get('hide_sale')"
+						<!--<field name="qty_delivered" invisible="context.get('hide_sale')"
 							attrs="{'readonly': [('qty_delivered_updateable', '=', False)]}"/>
 						<field name="qty_invoiced"
 							invisible="context.get('hide_sale')"/>-->
@@ -101,8 +102,8 @@
 							context="{'company_id': parent.company_id}"
 							groups="product.group_uom" options='{"no_open": True}'/>
 						<field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
-						<field name="price_unit"
-							/>
+						<field name="price_unit" invisible="1"/>
+						<field name="price_unit_to_show"/>
 						<field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
 							/>
 						<field name="discount" groups="sale.group_discount_per_so_line"/>
