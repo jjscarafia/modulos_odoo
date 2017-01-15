@@ -8,6 +8,7 @@ from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
 
+from decimal import *
 
 _logger = logging.getLogger(__name__)
 
@@ -24,6 +25,18 @@ class Lead(models.Model):
     _name = "crm.lead"
     _description = "Lead/Opportunity"
     _inherit = ['crm.lead']
+    
+    @api.model
+    def _get_data_booking_number(self):
+		booking_search = self.search([('booking_number', '>', 0)], limit=1, order="booking_number DESC")
+		
+		if len(booking_search) == 0:
+			return 1
+		else:
+			if booking_search.booking_number == 0:
+				return 1
+			else:
+				return Decimal(str(booking_search.booking_number)) + Decimal(1)
     
     mobile_number = fields.Char('Mobile number', compute='_get_data_employee')
     email_address = fields.Char('Email address', compute='_get_data_employee')
@@ -51,7 +64,10 @@ class Lead(models.Model):
     
     priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
     
-    id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=True)
+    id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=False)
+    
+    booking_number = fields.Float('Booking number', digits=(19,0), 
+								default=_get_data_booking_number)
     
     flight_number = fields.Char('Flight number')
     
@@ -61,34 +77,56 @@ class Lead(models.Model):
     
     products_text = fields.Text('Products')
     
+    _sql_constraints = {
+		('booking_number_uniq', 'unique(booking_number)', "The booking number can't be repeated, try again please!.")
+	}
+	
+    @api.one
+    def button_generate_booking_number(self):
+		book_search = self.search([('id', '=', self.id)], limit=1)
+		if book_search.booking_number == False or book_search.booking_number == 0:
+			book_search.write({'booking_number': self._get_data_booking_number()})
+		return True
+    
     def _get_data_id_number(self):
         for record in self:
-            if record.id:
-                record.id_number = "ID-" + str(record.id)
+            if record.booking_number:
+				CEROPLACES = Decimal(21) ** 0
+				record.id_number = "ID-" + str(Decimal(record.booking_number).quantize(CEROPLACES))
+            else:
+				record.id_number = "Without booking number"
                 
     def _search_data_id_number(self, operator, value):
-        res = []
-        assert operator in ('=', '!=', '<>', 'ilike', 'not ilike'), 'Operation not supported'
-        if operator in ('=', 'ilike'):
-            search_operator = 'in'
-        elif operator in ('<>', '!=', 'not ilike'):
-            search_operator = 'not in'
-        
-        if value == False:
-            string = ''' crm.id_number ''' + operator + ''' NULL ''' + \
-                        ''' or crm.id_number ''' + operator + """ '' """
-        else:
-            string = ''' crm.id_number ''' + operator + ''' %s '''
-            if operator in ('ilike', 'not ilike'):
-                value = '%' + value + '%'
-        
-        self.env.cr.execute('''SELECT crm.id
-                        FROM crm_lead crm
-                        WHERE ''' + string, (value,))
-                        
-        res_ids = [x[0] for x in self.env.cr.fetchall()]
-        res.append(('id', search_operator, res_ids))
-        return res
+		if value[:3] == 'ID-':
+			if len(value) > 3:
+				return [('booking_number', operator, value[3:])]
+			else:
+				return [('booking_number', operator, '')]
+				
+    """
+		res = []
+		assert operator in ('=', '!=', '<>', 'ilike', 'not ilike'), 'Operation not supported'
+		if operator in ('=', 'ilike'):
+			search_operator = 'in'
+		elif operator in ('<>', '!=', 'not ilike'):
+			search_operator = 'not in'
+		
+		if value == False:
+			string = ''' crm.id_number ''' + operator + ''' NULL ''' + \
+						''' or crm.id_number ''' + operator + """ '' """
+		else:
+			string = ''' crm.id_number ''' + operator + ''' %s '''
+			if operator in ('ilike', 'not ilike'):
+				value = '%' + value + '%'
+		
+		self.env.cr.execute('''SELECT crm.id
+						FROM crm_lead crm
+						WHERE ''' + string, (value,))
+						
+		res_ids = [x[0] for x in self.env.cr.fetchall()]
+		res.append(('id', search_operator, res_ids))
+		return res
+    """
     
     def _get_data_employee(self):
         for record in self:

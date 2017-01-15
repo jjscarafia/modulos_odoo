@@ -12,6 +12,7 @@
             
             <field name="partner_id" position="before">
 				<field name="id_number" readonly="1"/>
+				<!--<field name="booking_number" invisible="1"/>-->
                 <field name="product_id"/>
             </field>
             
@@ -166,9 +167,22 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
+			
+			<kanban position = "attributes">
+                <attribute name="default_order">booking_number</attribute>
+            </kanban>
+			
             <xpath expr="//t[@t-name='kanban-box']//div[contains(@class, 'oe_kanban_content')]" position="replace">
                 <div>
 					<field name="tag_ids"/>
+				</div>
+				<field name="booking_number" invisible="1"/>
+				<div attrs="{'invisible':[('booking_number','not is','False'),('booking_number','!=',0)], 'readonly':[('booking_number','not is','False'),('booking_number','!=',0)]}">
+					<a type="button">
+						<button string="Generate booking number" class="oe_highlight" name="button_generate_booking_number" type="object">
+							<span>Generate booking number</span>
+						</button>
+					</a>
 				</div>
 				<div>
 					<strong><field name="id_number" readonly="1"/></strong>
@@ -223,7 +237,7 @@
 		<field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
 		<field name="arch" type="xml">
 			<xpath expr="field[@name='name']" position="before">
-                <field name="id_number" string="ID number" filter_domain="[('id_number','ilike',self)]"/>
+                <field name="id_number" string="ID number (Booking number. Number format)" filter_domain="[('id_number','ilike','ID-'+self)]"/>
             </xpath>
 			<!--<field name="name" position="before">
 				<field name="id_number" string="ID number" filter_domain="[('id_number','ilike',self)]"/>
