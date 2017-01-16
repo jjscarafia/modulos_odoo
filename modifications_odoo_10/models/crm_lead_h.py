@@ -92,14 +92,14 @@ class Lead(models.Model):
         for record in self:
             if record.booking_number:
 				CEROPLACES = Decimal(21) ** 0
-				record.id_number = "ID-" + str(Decimal(record.booking_number).quantize(CEROPLACES))
+				record.id_number = "BOOK-" + str(Decimal(record.booking_number).quantize(CEROPLACES))
             else:
 				record.id_number = "Without booking number"
                 
     def _search_data_id_number(self, operator, value):
-		if value[:3] == 'ID-':
+		if value[:5] == 'BOOK-':
 			if len(value) > 3:
-				return [('booking_number', operator, value[3:])]
+				return [('booking_number', operator, value[5:])]
 			else:
 				return [('booking_number', operator, '')]
 				
