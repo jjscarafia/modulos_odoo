@@ -10,6 +10,8 @@ from odoo.modules.module import get_module_resource
 
 from decimal import *
 
+import time
+
 _logger = logging.getLogger(__name__)
 
 PRIORITIES = [
@@ -65,6 +67,9 @@ class Lead(models.Model):
     priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
     
     id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=False)
+    id_number_type = fields.Selection([
+					('book', 'Booking (BOOK-)'),],
+					string='ID number type', default='book')
     
     booking_number = fields.Float('Booking number', digits=(19,0), 
 								default=_get_data_booking_number)
@@ -76,7 +81,7 @@ class Lead(models.Model):
     dest_date_and_time = fields.Datetime('Destination date and time')
     
     products_text = fields.Text('Products')
-    
+
     _sql_constraints = {
 		('booking_number_uniq', 'unique(booking_number)', "The booking number can't be repeated, try again please!.")
 	}
@@ -91,8 +96,13 @@ class Lead(models.Model):
     def _get_data_id_number(self):
         for record in self:
             if record.booking_number:
-				CEROPLACES = Decimal(21) ** 0
-				record.id_number = "BOOK-" + str(Decimal(record.booking_number).quantize(CEROPLACES))
+				#CEROPLACES = Decimal(21) ** 0
+				if record.id_number_type == "book":
+					booking = "BOOK-"
+				else:
+					booking = "ID-"
+				
+				record.id_number = booking + str(record.booking_number)[:-2]
             else:
 				record.id_number = "Without booking number"
                 
