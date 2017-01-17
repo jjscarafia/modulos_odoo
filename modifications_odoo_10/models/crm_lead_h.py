@@ -103,7 +103,7 @@ class Lead(models.Model):
 					booking = "ID-"
 				
 				record.id_number = booking + str(record.booking_number)[:-2]
-            else not record.booking_number or record.booking_number == 0:
+            elif record.booking_number == False or record.booking_number == 0:
 				record.id_number = "Without booking number"
                 
     def _search_data_id_number(self, operator, value):
