@@ -33,7 +33,7 @@ class Lead(models.Model):
 		booking_search = self.search([('booking_number', '>', 0)], limit=1, order="booking_number DESC")
 		
 		if len(booking_search) == 0:
-			return 0
+			return 1
 		else:
 			if booking_search.booking_number == 0:
 				return 1
