@@ -15,7 +15,7 @@
             </field>
             
             <field name="name" position="before">
-				
+				<field name="id_book_number" />
             </field>
             
             <!--
@@ -84,7 +84,9 @@
         <field name="inherit_id" ref="base.res_partner_kanban_view"/>
         <field name="arch" type="xml">
 			
-			
+			<kanban position = "attributes">
+                <attribute name="default_order">id_book_number</attribute>
+            </kanban>
 			
             <xpath expr="//t[@t-name='kanban-box']" position="replace">
 				<t t-name="kanban-box">
@@ -113,7 +115,7 @@
 						</div>
 						<div class="oe_kanban_details">
 							<!--<strong class="oe_partner_heading"><field name="display_name"/></strong>-->
-							
+							<strong class="oe_partner_heading"><field name="id_book_number"/></strong>
 							<strong class="oe_partner_heading"><field name="name"/></strong>
 							<ul>
 								<li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
