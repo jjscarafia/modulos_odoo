@@ -18,7 +18,6 @@ class Partner(models.Model):
     _name = "res.partner"
     _description = 'Partner'
     _inherit = ['res.partner']
-    _order = "id_book_number"
     
     def name_get(self):
 		list_in = []
