@@ -25,4 +25,12 @@
         parent="menu_config_employees"
         sequence="75"/>
 
+	<record model="ir.actions.act_window" id="base.action_partner_form">
+        <field name="name">Booking</field>
+    </record>
+    
+    <record model="ir.ui.menu" id="sales_team.menu_partner_form">
+        <field name="name">Booking</field>
+    </record>
+
 </odoo>

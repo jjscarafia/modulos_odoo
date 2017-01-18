@@ -54,14 +54,21 @@ class Lead(models.Model):
     
     product_id = fields.Many2one('product.template', string='Product')
     
+    price = fields.Float('Price')
+    #product_ids = fields.Many2many('product.template', 'crm_product_template_rel', 'crm_id', 'product_id', string='Products')
+
+    
     date_and_time = fields.Datetime('Date and Time')
     
-    journey = fields.Char('Journey')
+    journey = fields.Text('Destination address')
     
-    employee_id = fields.Many2one('hr.employee', string='Driver')
+    employee_id = fields.Many2one('hr.employee', string='Driver assigned')
     
     #customer_id = fields.Many2one('res.partner', string='Customer')
     partner_id_name = fields.Char("Customer name", related='partner_id.name', store=False)
+    partner_id_book_number = fields.Char("Customer ID Number", related='partner_id.id_book_number', store=False)
+    partner_id_supplier = fields.Char("Booking Supplier", related='partner_id.supplier_id.name', store=False)
+    flight_number = fields.Char("Flight number", related='partner_id.flight_number', store=False)
     customer_email = fields.Char('Customer email', compute='_get_data_customer')
     customer_mobile = fields.Char('Customer mobile', compute='_get_data_customer')
     
@@ -75,13 +82,13 @@ class Lead(models.Model):
     booking_number = fields.Float('Booking number', digits=(19,0), 
 								default=_get_data_booking_number)
     
-    flight_number = fields.Char('Flight number')
+    #flight_number = fields.Char('Flight number')
     
     destination_address = fields.Text('Destination address')
     
     dest_date_and_time = fields.Datetime('Destination date and time')
     
-    products_text = fields.Text('Products')
+    #products_text = fields.Text('Products')
 
     _sql_constraints = {
 		('booking_number_uniq', 'unique(booking_number)', "The booking number can't be repeated, try again please!.")
@@ -147,7 +154,7 @@ class Lead(models.Model):
                 record.landline_number = record.employee_id.landline_number
                 record.whatsapp_number = record.employee_id.whatsapp_number
                 record.driver_license = record.employee_id.driver_license
-                record.vehicle_type = record.employee_id.vehicle_type
+                record.vehicle_type = record.employee_id.vehicle_type_id.name
                 record.vehicle_model = record.employee_id.vehicle_model
                 record.vehicle_color = record.employee_id.vehicle_color
                 record.plate_number = record.employee_id.plate_number
@@ -161,7 +168,7 @@ class Lead(models.Model):
             self.landline_number = self.employee_id.landline_number
             self.whatsapp_number = self.employee_id.whatsapp_number
             self.driver_license = self.employee_id.driver_license
-            self.vehicle_type = self.employee_id.vehicle_type.name
+            self.vehicle_type = self.employee_id.vehicle_type_id.name
             self.vehicle_model = self.employee_id.vehicle_model
             self.vehicle_color = self.employee_id.vehicle_color
             self.plate_number = self.employee_id.plate_number
@@ -179,6 +186,9 @@ class Lead(models.Model):
             self.customer_email = self.partner_id.email
             self.customer_mobile = self.partner_id.mobile
             self.partner_id_name = self.partner_id.name
+            self.partner_id_book_number = self.partner_id.id_book_number
+            self.partner_id_supplier = self.partner_id.supplier_id.name
+            self.partner_id_flight_number = self.partner_id.flight_number
 
     """
     location = fields.Char(string="Location", help='Location of the vehicle (garage, ...)', 

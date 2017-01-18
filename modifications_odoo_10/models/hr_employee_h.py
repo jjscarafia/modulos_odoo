@@ -16,7 +16,7 @@ class Employee(models.Model):
     _description = "Employee"
     _inherit = ['hr.employee']
     
-    vehicle_type = fields.Many2one('hr.vehicle.type', string='Vehicle type')
+    vehicle_type_id = fields.Many2one('hr.vehicle.type', string='Vehicle type')
     
     #vehicle_type = #fields.Selection([
         #('standard', 'Standard'),

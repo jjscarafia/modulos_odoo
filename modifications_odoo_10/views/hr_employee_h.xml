@@ -16,7 +16,7 @@
             </xpath>-->
             
             <field name="job_id" position="after">
-                <field name="vehicle_type"/>
+                <field name="vehicle_type_id"/>
                 <field name="vehicle_model"/>
             </field>
             <field name="parent_id" position="replace">

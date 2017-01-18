@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='hr_supplier_model_view_form' model='ir.ui.view'>
+        <field name="name">hr.supplier.form</field>
+        <field name="model">hr.supplier</field>
+        <field name="arch" type="xml">
+            <form string="Supplier">
+                <sheet>
+                    <notebook>
+                        <page string="Supplier">
+                            <group>
+                                <field name="name" />
+                                <field name="supplier_code" />
+                                <field name="supplier_location" />
+                            </group>
+                        </page>>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='hr_supplier_model_view_tree' model='ir.ui.view'>
+        <field name="name">hr.supplier.tree</field>
+        <field name="model">hr.supplier</field>
+        <field name="arch" type="xml">
+            <tree string="Supplier">
+                <field name="name" />
+                <field name="supplier_code" />
+                <field name="supplier_location" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='hr_supplier_action' model='ir.actions.act_window'>
+        <field name="name">Supplier</field>
+        <field name="res_model">hr.supplier</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new supplier.
+          </p>
+        </field>
+    </record>
+            
+    <menuitem
+        id="menu_hr_supplier"
+        name="Supplier"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees_general"
+        action="hr_supplier_action"
+        sequence="75"/>
+</odoo>

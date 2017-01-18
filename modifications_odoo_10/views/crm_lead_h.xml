@@ -13,13 +13,13 @@
             <field name="partner_id" position="before">
 				<field name="id_number" readonly="1"/>
 				<!--<field name="booking_number" invisible="1"/>-->
-                <field name="product_id"/>
             </field>
             
             <field name="partner_id" position="after">
 				<field name="partner_id_name" readonly="1"/>
 				<field name="date_and_time"/>
                 <field name="journey"/>
+                <field name="price"/>
             </field>
             
             <field name="partner_id" position = "attributes">
@@ -59,7 +59,7 @@
             </field>
             
             <field name="user_id" position="before">
-                <field name="flight_number"/>
+                <field name="flight_number" readonly="1"/>
             </field>
             
             <field name="user_id" position="attributes">
@@ -72,7 +72,7 @@
             
             <xpath expr="//form/sheet/group/group[2]" position = "replace">
 				<group>
-					<field name="products_text"/>
+					<field name="product_id" />
 					<field name="destination_address"/>
 					<field name="dest_date_and_time"/>
 				</group>
@@ -147,14 +147,17 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.view_create_opportunity_simplified"/>
         <field name="arch" type="xml">
-            
+			
             <field name="partner_id" position="replace">
-                <field name="product_id"/>
                 <field name="partner_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
                 <field name="partner_id_name" readonly="1"/>
+                <field name="partner_id_book_number" readonly="1"/>
+                <field name="partner_id_supplier" readonly="1"/>
+                <field name="product_id" />
                 <field name="employee_id"/>
                 <field name="date_and_time"/>
                 <field name="journey"/>
+                <field name="price"/>
             </field>
             
             <!--<field name="name" position = "attributes">
@@ -162,6 +165,10 @@
             </field>-->
             
         </field>
+    </record>
+    
+	<record model="ir.actions.act_window" id="crm.create_opportunity_simplified">
+        <field name="name">Create a Booking</field>
     </record>
     
     <record model="ir.ui.view" id="crm_case_kanban_view_leads_inherit_kanban">
@@ -206,6 +213,9 @@
 				</div>
 				<div>
 					<strong>Journey: </strong><field name="journey"/>
+				</div>
+				<div>
+					<strong>Price: </strong><field name="price"/>
 				</div>
 				<div class="text-muted">
 					<strong>Expected Revenue: </strong><t t-if="record.planned_revenue.raw_value"><field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/></t>

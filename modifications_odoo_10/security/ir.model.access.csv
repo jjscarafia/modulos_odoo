@@ -14,3 +14,7 @@ access_hr_employee_language_manager,hr.employee.language.manager,model_hr_langua
 access_hr_employee_city_user,hr.employee.city.user,model_hr_city,hr.group_hr_user,1,0,0,0
 access_hr_employee_city_group,hr.employee.city.group,model_hr_city,base.group_user,1,0,0,0
 access_hr_employee_city_manager,hr.employee.city.manager,model_hr_city,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_supplier_user,hr.employee.supplier.user,model_hr_supplier,hr.group_hr_user,1,0,0,0
+access_hr_employee_supplier_group,hr.employee.supplier.group,model_hr_supplier,base.group_user,1,0,0,0
+access_hr_employee_supplier_manager,hr.employee.supplier.manager,model_hr_supplier,hr.group_hr_manager,1,1,1,1

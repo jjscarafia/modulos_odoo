@@ -15,7 +15,20 @@
             </field>
             
             <field name="name" position="before">
-				<field name="id_book_number" required="1"/>
+				<div>
+					<field name="id_book_number" placeholder="Booking number"/>
+				</div>
+            </field>
+            
+            <field name="phone" position="before">
+				<field name="supplier_id"/>
+            </field>
+            
+            <field name="email" position="after">
+				<field name="pick_up_address"/>
+				<field name="dest_address"/>
+				<field name="date_time"/>
+				<field name="flight_number"/>
             </field>
             
             <!--
