@@ -18,7 +18,13 @@ class Partner(models.Model):
     _name = "res.partner"
     _description = 'Partner'
     _inherit = ['res.partner']
-    _rec_name = "id_book_number"
     
     id_book_number = fields.Char('ID number')
-    display_name = fields.Char("Name", store=True, index=True)
+    display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
+    
+    @api.depends('id_book_number')
+    def _compute_display_name(self):
+        diff = dict(show_address=None, show_address_only=None, show_email=None)
+        names = dict(self.with_context(**diff).name_get())
+        for partner in self:
+            partner.display_name = partner.id_book_number + " " + partner.name #names.get(partner.id)
