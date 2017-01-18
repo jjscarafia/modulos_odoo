@@ -22,11 +22,15 @@ class Partner(models.Model):
     def name_get(self):
 		list_in = []
 		for record in self:
-			if record.id_book_number == False:
-				number = ""
-			else:
-				number = record.id_book_number
-			list_in.append((record.id, number + " " + record.name))
+			try:
+				if record.id_book_number == False:
+					number = ""
+				else:
+					number = record.id_book_number
+				list_in.append((record.id, number + " " + record.name))
+			except:
+				list_in.append((record.id, record.name))
+			
 		return list_in
     
     id_book_number = fields.Char('ID number', required=True)
