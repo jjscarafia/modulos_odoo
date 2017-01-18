@@ -35,3 +35,4 @@ class Partner(models.Model):
 		return list_in
     
     id_book_number = fields.Char('ID number', required=True)
+    display_name = fields.Char("Name", store=True, index=True)
