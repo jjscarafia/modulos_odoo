@@ -18,4 +18,4 @@ class Partner(models.Model):
     _name = "res.partner"
     _description = 'Partner'
     _inherit = ['res.partner']
-    
+    _rec_name = "name"
