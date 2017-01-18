@@ -15,7 +15,7 @@
             </field>
             
             <field name="name" position="before">
-				<field name="id_book_number" />
+				<field name="id_book_number" required="1"/>
             </field>
             
             <!--
