@@ -10,3 +10,4 @@ import hr_city
 import crm_lead_h
 import sale_order_h
 import sale_order_line_h
+import res_partner_h
