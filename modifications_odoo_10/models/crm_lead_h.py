@@ -178,6 +178,7 @@ class Lead(models.Model):
         if self.partner_id:
             self.customer_email = self.partner_id.email
             self.customer_mobile = self.partner_id.mobile
+            self.partner_id_name = self.partner_id.name
 
     """
     location = fields.Char(string="Location", help='Location of the vehicle (garage, ...)', 
