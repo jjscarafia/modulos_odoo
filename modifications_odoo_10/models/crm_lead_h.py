@@ -61,7 +61,7 @@ class Lead(models.Model):
     employee_id = fields.Many2one('hr.employee', string='Driver')
     
     #customer_id = fields.Many2one('res.partner', string='Customer')
-    partner_id_name = fields.Char(related='partner_id.name', store=False)
+    partner_id_name = fields.Char("Customer name", related='partner_id.name', store=False)
     customer_email = fields.Char('Customer email', compute='_get_data_customer')
     customer_mobile = fields.Char('Customer mobile', compute='_get_data_customer')
     
