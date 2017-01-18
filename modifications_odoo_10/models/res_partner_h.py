@@ -18,21 +18,6 @@ class Partner(models.Model):
     _name = "res.partner"
     _description = 'Partner'
     _inherit = ['res.partner']
-    _order = "name"
-    
-    def name_get(self):
-		list_in = []
-		for record in self:
-			try:
-				if record.id_book_number == False:
-					number = ""
-				else:
-					number = record.id_book_number
-				list_in.append((record.id, number + " " + record.name))
-			except:
-				list_in.append((record.id, record.name))
-			
-		return list_in
     
     id_book_number = fields.Char('ID number', required=True)
     display_name = fields.Char("Name", store=True, index=True)
