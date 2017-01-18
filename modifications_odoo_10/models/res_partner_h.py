@@ -19,6 +19,3 @@ class Partner(models.Model):
     _description = 'Partner'
     _inherit = ['res.partner']
     
-    
-    
-    id_book_number = fields.Char('ID number', required=True)
