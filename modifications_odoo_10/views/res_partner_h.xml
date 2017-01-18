@@ -84,9 +84,7 @@
         <field name="inherit_id" ref="base.res_partner_kanban_view"/>
         <field name="arch" type="xml">
 			
-			<kanban position = "attributes">
-                <attribute name="default_order">id_book_number</attribute>
-            </kanban>
+			
 			
             <xpath expr="//t[@t-name='kanban-box']" position="replace">
 				<t t-name="kanban-box">
