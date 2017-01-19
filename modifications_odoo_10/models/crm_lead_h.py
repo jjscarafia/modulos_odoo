@@ -127,7 +127,7 @@ class Lead(models.Model):
     #products_text = fields.Text('Products')
 
     _sql_constraints = {
-		('booking_number_uniq', 'unique(year_book_number,month_book_number,booking_number)', "The booking number can't be repeated, try again please!.")
+		('booking_number_uniq', 'unique(id_number_type,year_book_number,month_book_number,booking_number)', "The booking number can't be repeated, try again please!.")
 	}
 	
     @api.model

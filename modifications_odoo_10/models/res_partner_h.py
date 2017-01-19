@@ -44,3 +44,7 @@ class Partner(models.Model):
         names = dict(self.with_context(**diff).name_get())
         for partner in self:
             partner.display_name = names.get(partner.id)
+
+    _sql_constraints = {
+		('booking_id_number_uniq', 'unique(id_book_number)', "The booking number can't be repeated, try again please!.")
+	}
