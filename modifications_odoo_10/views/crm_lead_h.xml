@@ -10,6 +10,10 @@
                 <attribute name="string">Driver assigned</attribute>
             </xpath>
             
+            <xpath expr="//form/sheet/group/group[1]" position = "attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            
             <field name="partner_id" position="before">
 				<field name="id_number" readonly="1"/>
 				<!--<field name="booking_number" invisible="1"/>-->
