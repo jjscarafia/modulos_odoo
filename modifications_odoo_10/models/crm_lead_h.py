@@ -110,8 +110,7 @@ class Lead(models.Model):
 					('book', 'Booking (BOOK-)'),],
 					string='ID number type', default='book')
     
-    booking_number = fields.Float('Booking number', digits=(19,0), 
-								default=_get_data_booking_number)
+    booking_number = fields.Float('Booking number', digits=(19,0)) #default=_get_data_booking_number)
 								
     year_book_number = fields.Integer('Year', default=_get_current_year)
     
