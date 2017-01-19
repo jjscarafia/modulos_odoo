@@ -12,3 +12,4 @@ import crm_lead_h
 import sale_order_h
 import sale_order_line_h
 import res_partner_h
+import account_invoice_h

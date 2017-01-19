@@ -21,7 +21,7 @@ class Partner(models.Model):
     
     id_book_number = fields.Char('ID number')
     display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
-    supplier_id = fields.Many2one('hr.supplier', string='Supplier', required=True)
+    supplier_id = fields.Many2one('res.partner', string='Booking Supplier')
     pick_up_address = fields.Text('Pick Up Address')
     dest_address = fields.Text('Destinations Address')
     date_time = fields.Datetime('Date and Time')

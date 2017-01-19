@@ -100,7 +100,8 @@ class Lead(models.Model):
     #customer_id = fields.Many2one('res.partner', string='Customer')
     partner_id_name = fields.Char("Customer name", related='partner_id.name', store=False)
     partner_id_book_number = fields.Char("Customer ID Number", related='partner_id.id_book_number', store=False)
-    partner_id_supplier = fields.Char("Booking Supplier", related='partner_id.supplier_id.name', store=False)
+    user_id = fields.Many2one(related='partner_id.user_id', store=False)
+    supplier_id = fields.Many2one(related='partner_id.supplier_id', store=False)
     flight_number = fields.Char("Flight number", related='partner_id.flight_number', store=False)
     customer_email = fields.Char('Customer email', compute='_get_data_customer')
     customer_mobile = fields.Char('Customer mobile', compute='_get_data_customer')
@@ -217,6 +218,8 @@ class Lead(models.Model):
             if record.partner_id:
                 record.customer_email = record.partner_id.email
                 record.customer_mobile = record.partner_id.mobile
+                record.user_id = record.partner_id.user_id
+                record.supplier_id = record.partner_id.supplier_id
     
     @api.onchange('partner_id') # if these fields are changed, call method
     def check_change_customer(self):
@@ -225,8 +228,10 @@ class Lead(models.Model):
             self.customer_mobile = self.partner_id.mobile
             self.partner_id_name = self.partner_id.name
             self.partner_id_book_number = self.partner_id.id_book_number
-            self.partner_id_supplier = self.partner_id.supplier_id.name
+            #self.partner_id_supplier = self.partner_id.supplier_id.name
             self.partner_id_flight_number = self.partner_id.flight_number
+            self.user_id = self.partner_id.user_id
+            self.supplier_id = self.partner_id.supplier_id
             #self.date_and_time = self.partner_id.date_time
 
     """

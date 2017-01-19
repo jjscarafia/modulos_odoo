@@ -29,6 +29,7 @@
             <field name="partner_id" position = "attributes">
 				<attribute name="domain">[('customer','=',1), ('parent_id', '=', False)]</attribute>
 				<attribute name="context"></attribute>
+                <attribute name="required">True</attribute>
             </field>
             
             <field name="partner_name" position="after">
@@ -67,12 +68,16 @@
             </field>
             
             <field name="user_id" position="attributes">
-                <attribute name="string">Booking Supplier</attribute>
+                <attribute name="readonly">True</attribute>
             </field>
             
-            <field name="user_id" position="replace">
-                <field name="partner_id_supplier" readonly="1"/>
+            <field name="user_id" position="before">
+                <field name="supplier_id" readonly="1"/>
             </field>
+            
+            <!--<field name="user_id" position="replace">
+                <field name="partner_id_supplier" readonly="1"/>
+            </field>-->
             
             <!--<field name="date_deadline" position="replace">
                 <field name="destination_address"/>
@@ -158,7 +163,8 @@
                 <field name="partner_id" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
                 <field name="partner_id_name" readonly="1"/>
                 <field name="partner_id_book_number" readonly="1"/>
-                <field name="partner_id_supplier" readonly="1"/>
+                <field name="user_id" readonly="1"/>
+                <field name="supplier_id" readonly="1"/>
                 <field name="product_id" />
                 <field name="employee_id"/>
                 <field name="date_and_time"/>
