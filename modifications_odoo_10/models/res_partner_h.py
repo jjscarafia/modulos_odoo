@@ -21,7 +21,7 @@ class Partner(models.Model):
     
     id_book_number = fields.Char('ID number')
     display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
-    supplier_id = fields.Many2one('hr.supplier', string='Supplier')
+    supplier_id = fields.Many2one('hr.supplier', string='Supplier', required=True)
     pick_up_address = fields.Text('Pick Up Address')
     dest_address = fields.Text('Destinations Address')
     date_time = fields.Datetime('Date and Time')
@@ -46,5 +46,5 @@ class Partner(models.Model):
             partner.display_name = names.get(partner.id)
 
     _sql_constraints = {
-		('booking_id_number_uniq', 'unique(id_book_number)', "The booking number can't be repeated, try again please!.")
+		('booking_id_number_uniq', 'unique(supplier_id,id_book_number)', "The booking number can't be repeated, try again please!.")
 	}

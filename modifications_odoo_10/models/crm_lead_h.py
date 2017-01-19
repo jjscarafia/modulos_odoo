@@ -91,7 +91,7 @@ class Lead(models.Model):
     #product_ids = fields.Many2many('product.template', 'crm_product_template_rel', 'crm_id', 'product_id', string='Products')
 
     
-    date_and_time = fields.Datetime('Date and Time')
+    date_and_time = fields.Datetime('Date and Time')#, related='partner_id.date_time', store=False)
     
     journey = fields.Text('Destination address')
     
@@ -119,10 +119,6 @@ class Lead(models.Model):
     month_book_number = fields.Integer('Month', default=_get_current_month)
     
     #flight_number = fields.Char('Flight number')
-    
-    destination_address = fields.Text('Destination address')
-    
-    dest_date_and_time = fields.Datetime('Destination date and time')
     
     #products_text = fields.Text('Products')
 
@@ -231,6 +227,7 @@ class Lead(models.Model):
             self.partner_id_book_number = self.partner_id.id_book_number
             self.partner_id_supplier = self.partner_id.supplier_id.name
             self.partner_id_flight_number = self.partner_id.flight_number
+            #self.date_and_time = self.partner_id.date_time
 
     """
     location = fields.Char(string="Location", help='Location of the vehicle (garage, ...)', 
