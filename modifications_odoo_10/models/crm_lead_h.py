@@ -45,6 +45,23 @@ class Lead(models.Model):
 				return Decimal(str(booking_search.booking_number)) + Decimal(1)
 				
     @api.model
+    def _get_data_booking_number_generate(self):
+		year = datetime.datetime.now().year
+		month = datetime.datetime.now().month
+		booking_search = self.search([('booking_number', '>', 0),
+										('year_book_number','=',year),
+										('month_book_number','=',month)], limit=1, order="booking_number DESC")
+		
+		if len(booking_search) == 0:
+			return {'booking_number':1,'year_book_number':year,'month_book_number':month}
+		else:
+			if booking_search.booking_number == 0:
+				return {'booking_number':1,'year_book_number':year,'month_book_number':month}
+			else:
+				return {'booking_number':Decimal(str(booking_search.booking_number)) + Decimal(1),
+						'year_book_number':year,'month_book_number':month}
+				
+    @api.model
     def _get_current_year(self):
         now = datetime.datetime.now()
         return str(now.year)
@@ -112,11 +129,17 @@ class Lead(models.Model):
 		('booking_number_uniq', 'unique(year_book_number,month_book_number,booking_number)', "The booking number can't be repeated, try again please!.")
 	}
 	
+    @api.model
+    def create(self, vals):
+        vals.update(self._get_data_booking_number_generate())
+        res_id = super(Lead, self).create(vals)
+        return res_id
+	
     @api.one
     def button_generate_booking_number(self):
 		book_search = self.search([('id', '=', self.id)], limit=1)
 		if book_search.booking_number == False or book_search.booking_number == 0:
-			book_search.write({'booking_number': self._get_data_booking_number()})
+			book_search.write(self._get_data_booking_number_generate())
 		return True
     
     def _get_data_id_number(self):
