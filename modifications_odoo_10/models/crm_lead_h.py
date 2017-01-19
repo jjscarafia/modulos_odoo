@@ -30,6 +30,7 @@ class Lead(models.Model):
     _description = "Lead/Opportunity"
     _inherit = ['crm.lead']
     
+    """
     @api.model
     def _get_data_booking_number(self):
 		booking_search = self.search([('booking_number', '>', 0),
@@ -43,6 +44,7 @@ class Lead(models.Model):
 				return 1
 			else:
 				return Decimal(str(booking_search.booking_number)) + Decimal(1)
+	"""
 				
     @api.model
     def _get_data_booking_number_generate(self):
