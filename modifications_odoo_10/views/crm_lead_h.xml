@@ -182,7 +182,7 @@
         <field name="arch" type="xml">
 			
 			<kanban position = "attributes">
-                <attribute name="default_order">booking_number</attribute>
+                <attribute name="default_order">year_book_number,month_book_number,booking_number</attribute>
             </kanban>
 			
             <xpath expr="//t[@t-name='kanban-box']//div[contains(@class, 'oe_kanban_content')]" position="replace">

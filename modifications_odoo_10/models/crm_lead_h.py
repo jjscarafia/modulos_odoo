@@ -12,6 +12,8 @@ from decimal import *
 
 import time
 
+import datetime
+
 _logger = logging.getLogger(__name__)
 
 PRIORITIES = [
@@ -30,7 +32,9 @@ class Lead(models.Model):
     
     @api.model
     def _get_data_booking_number(self):
-		booking_search = self.search([('booking_number', '>', 0)], limit=1, order="booking_number DESC")
+		booking_search = self.search([('booking_number', '>', 0),
+										('year_book_number','=',datetime.datetime.now().year),
+										('month_book_number','=',datetime.datetime.now().month)], limit=1, order="booking_number DESC")
 		
 		if len(booking_search) == 0:
 			return 1
@@ -39,6 +43,16 @@ class Lead(models.Model):
 				return 1
 			else:
 				return Decimal(str(booking_search.booking_number)) + Decimal(1)
+				
+    @api.model
+    def _get_current_year(self):
+        now = datetime.datetime.now()
+        return str(now.year)
+        
+    @api.model
+    def _get_current_month(self):
+        now = datetime.datetime.now()
+        return str(now.month)
     
     mobile_number = fields.Char('Mobile number', compute='_get_data_employee')
     email_address = fields.Char('Email address', compute='_get_data_employee')
@@ -81,6 +95,10 @@ class Lead(models.Model):
     
     booking_number = fields.Float('Booking number', digits=(19,0), 
 								default=_get_data_booking_number)
+								
+    year_book_number = fields.Integer('Year', default=_get_current_year)
+    
+    month_book_number = fields.Integer('Month', default=_get_current_month)
     
     #flight_number = fields.Char('Flight number')
     
@@ -91,7 +109,7 @@ class Lead(models.Model):
     #products_text = fields.Text('Products')
 
     _sql_constraints = {
-		('booking_number_uniq', 'unique(booking_number)', "The booking number can't be repeated, try again please!.")
+		('booking_number_uniq', 'unique(year_book_number,month_book_number,booking_number)', "The booking number can't be repeated, try again please!.")
 	}
 	
     @api.one
@@ -110,7 +128,7 @@ class Lead(models.Model):
 				else:
 					booking = "ID-"
 				
-				record.id_number = booking + str(record.booking_number)[:-2]
+				record.id_number = booking + str(record.year_book_number) + str(record.month_book_number) + "-" + str(record.booking_number)[:-2]
             elif record.booking_number == False or record.booking_number == 0:
 				record.id_number = "Without booking number"
                 
