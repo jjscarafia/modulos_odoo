@@ -58,13 +58,12 @@ class Lead(models.Model):
 			booking_number != '' and
 			year_book_number = '%s' and month_book_number = '%s'
 		'''
-		self.env.cr.execute('''SELECT to_number(booking_number,'9999999999999999999')
+		self.env.cr.execute('''SELECT booking_number_compute
 						FROM crm_lead
 						WHERE ''' + string + 
 						''' 
-							order by to_number(booking_number,'9999999999999999999') DESC limit 1
+                            order by booking_number_compute DESC limit 1
 						''', (year,month))
-		
 		
 		booking_search = self.env.cr.fetchall()
 		
@@ -72,7 +71,7 @@ class Lead(models.Model):
 			return {'booking_number':1,'year_book_number':year,'month_book_number':month,
                     'booking_number_compute':1,'year_book_number_compute':year,'month_book_number_compute':month,}
 		else:
-			if booking_search[0][0] == 0:
+			if booking_search[0][0] == 0 or booking_search[0][0] == None:
 				return {'booking_number':1,'year_book_number':year,'month_book_number':month,
                         'booking_number_compute':1,'year_book_number_compute':year,'month_book_number_compute':month,}
 			else:
