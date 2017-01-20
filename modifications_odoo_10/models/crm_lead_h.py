@@ -52,7 +52,7 @@ class Lead(models.Model):
 		month = datetime.datetime.now().month
 		#booking_search = self.search([('booking_number', '>', 0),
 		#								('year_book_number','=',year),
-		#								('month_book_number','=',month)], limit=1, order="to_number(booking_number,'9999999999999999999') DESC")
+		#								('month_book_number','=',month)], limit=1, order="booking_number_compute DESC")
 		
 		string = '''
 			booking_number != '' and
