@@ -69,13 +69,17 @@ class Lead(models.Model):
 		booking_search = self.env.cr.fetchall()
 		
 		if len(booking_search) == 0:
-			return {'booking_number':1,'year_book_number':year,'month_book_number':month}
+			return {'booking_number':1,'year_book_number':year,'month_book_number':month,
+                    'booking_number_compute':1,'year_book_number_compute':year,'month_book_number_compute':month,}
 		else:
 			if booking_search[0][0] == 0:
-				return {'booking_number':1,'year_book_number':year,'month_book_number':month}
+				return {'booking_number':1,'year_book_number':year,'month_book_number':month,
+                        'booking_number_compute':1,'year_book_number_compute':year,'month_book_number_compute':month,}
 			else:
 				return {'booking_number':Decimal(str(booking_search[0][0])[:-2]) + Decimal(1),
-						'year_book_number':year,'month_book_number':month}
+						'year_book_number':year,'month_book_number':month,
+                        'booking_number_compute':Decimal(str(booking_search[0][0])[:-2]) + Decimal(1),
+						'year_book_number_compute':year,'month_book_number_compute':month}
 				
     @api.model
     def _get_current_year(self):
@@ -127,10 +131,14 @@ class Lead(models.Model):
 					string='ID number type', default='book')
     
     booking_number = fields.Char('Booking number')#, digits=(19,0)) #default=_get_data_booking_number)
-								
+    
     year_book_number = fields.Char('Year', default=_get_current_year)
     
     month_book_number = fields.Char('Month', default=_get_current_month)
+    
+    booking_number_compute = fields.Float('Booking number', digits=(19,0), compute="_get_data_crm_h", store=True)
+    year_book_number_compute = fields.Integer('Year', compute="_get_data_crm_h", store=True)
+    month_book_number_compute = fields.Integer('Month', compute="_get_data_crm_h", store=True)
     
     #flight_number = fields.Char('Flight number')
     
@@ -145,6 +153,25 @@ class Lead(models.Model):
         vals.update(self._get_data_booking_number_generate())
         res_id = super(Lead, self).create(vals)
         return res_id
+    
+    @api.multi
+    def write(self, vals):
+        if 'booking_number' in vals:
+            vals.update({'booking_number_compute': vals['booking_number']})
+        elif 'booking_number_compute' in vals:
+            vals.update({'booking_number': vals['booking_number_compute']})
+            
+        if 'year_book_number' in vals:
+            vals.update({'year_book_number_compute': vals['year_book_number']})
+        elif 'year_book_number_compute' in vals:
+            vals.update({'year_book_number': vals['year_book_number_compute']})
+            
+        if 'month_book_number' in vals:
+            vals.update({'month_book_number_compute': vals['month_book_number']})
+        elif 'month_book_number_compute' in vals:
+            vals.update({'month_book_number': vals['month_book_number_compute']})
+
+        return super(Lead, self).write(vals)
 	
     @api.one
     def button_generate_booking_number(self):
@@ -155,7 +182,7 @@ class Lead(models.Model):
     
     def _get_data_id_number(self):
         for record in self:
-            if record.booking_number:
+            if record.booking_number and record.year_book_number and record.month_book_number:
 				#CEROPLACES = Decimal(21) ** 0
 				if record.id_number_type == "book":
 					booking = "BOOK-"
@@ -163,8 +190,9 @@ class Lead(models.Model):
 					booking = "ID-"
 				
 				record.id_number = booking + str(record.year_book_number) + "-" + str(record.month_book_number) + "-" + str(record.booking_number)
-            elif record.booking_number == False or record.booking_number == '':
-				print "record.booking_number " + str(record.booking_number)
+            elif record.booking_number in [False, ''] or \
+                    record.year_book_number in [False, ''] or \
+                    record.month_book_number in [False, '']:
 				record.id_number = "Without booking number"
                 
     def _search_data_id_number(self, operator, value):
@@ -178,8 +206,6 @@ class Lead(models.Model):
 			all_the_other = all_the_other.split('-')
 			
 			count = len(all_the_other)
-			#print "len(all_the_other) " + str(count) + " all_the_other[0] " + all_the_other[0]
-			print "operator " + operator
 			
 			if operator == "ilike":
 				operator = "=ilike"
@@ -208,11 +234,10 @@ class Lead(models.Model):
 					if operator == "=ilike" or operator == "=like":
 						number = number+"%"
 					list_cond.append(('booking_number', operator, number))
-				#print str(['&',('year_book_number', operator, year),'&',('month_book_number', operator, month),('booking_number', operator, number)])
+                    
 				crm_lead_ids = self.env['crm.lead'].search(
 					list_cond
 				)
-				print str(list_cond)
 				list_cond = crm_lead_ids.ids
 			return [('id', 'in', list_cond)]
 		else:
@@ -270,7 +295,13 @@ class Lead(models.Model):
             self.vehicle_color = self.employee_id.vehicle_color
             self.plate_number = self.employee_id.plate_number
             self.car_insurance_number = self.employee_id.car_insurance_number
-            
+    
+    def _get_data_crm_h(self):
+        for record in self:
+            record.booking_number_compute = Decimal(record.booking_number)
+            record.year_book_number_compute = int(record.year_book_number)
+            record.month_book_number_compute = int(record.month_book_number)
+    
     def _get_data_customer(self):
         for record in self:
             if record.partner_id:

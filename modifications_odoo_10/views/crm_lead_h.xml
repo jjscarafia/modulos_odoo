@@ -190,7 +190,7 @@
         <field name="arch" type="xml">
 			
 			<kanban position = "attributes">
-                <attribute name="default_order">year_book_number,month_book_number,booking_number</attribute>
+                <attribute name="default_order">year_book_number_compute,month_book_number_compute,booking_number_compute</attribute>
             </kanban>
 			
             <xpath expr="//t[@t-name='kanban-box']//div[contains(@class, 'oe_kanban_content')]" position="replace">
@@ -198,7 +198,12 @@
 					<field name="tag_ids"/>
 				</div>
 				<field name="booking_number" invisible="1"/>
-				<div attrs="{'invisible':[('booking_number','not in',[False,''])], 'readonly':[('booking_number','not in',[False,''])]}">
+                <field name="year_book_number" invisible="1"/>
+                <field name="month_book_number" invisible="1"/>
+                <field name="booking_number_compute" invisible="0"/>
+                <field name="year_book_number_compute" invisible="0"/>
+                <field name="month_book_number_compute" invisible="0"/>
+				<div attrs="{'invisible':[('booking_number','not in',[False,'']),('year_book_number','not in',[False,'']),('month_book_number','not in',[False,''])]}">
 					<a type="button">
 						<button string="Generate booking number" class="oe_highlight" name="button_generate_booking_number" type="object">
 							<span>Generate booking number</span>
