@@ -50,17 +50,31 @@ class Lead(models.Model):
     def _get_data_booking_number_generate(self):
 		year = datetime.datetime.now().year
 		month = datetime.datetime.now().month
-		booking_search = self.search([('booking_number', '>', 0),
-										('year_book_number','=',year),
-										('month_book_number','=',month)], limit=1, order="booking_number DESC")
+		#booking_search = self.search([('booking_number', '>', 0),
+		#								('year_book_number','=',year),
+		#								('month_book_number','=',month)], limit=1, order="to_number(booking_number,'9999999999999999999') DESC")
+		
+		string = '''
+			booking_number != '' and
+			year_book_number = '%s' and month_book_number = '%s'
+		'''
+		self.env.cr.execute('''SELECT to_number(booking_number,'9999999999999999999')
+						FROM crm_lead
+						WHERE ''' + string + 
+						''' 
+							order by to_number(booking_number,'9999999999999999999') DESC limit 1
+						''', (year,month))
+		
+		
+		booking_search = self.env.cr.fetchall()
 		
 		if len(booking_search) == 0:
 			return {'booking_number':1,'year_book_number':year,'month_book_number':month}
 		else:
-			if booking_search.booking_number == 0:
+			if booking_search[0][0] == 0:
 				return {'booking_number':1,'year_book_number':year,'month_book_number':month}
 			else:
-				return {'booking_number':Decimal(str(booking_search.booking_number)) + Decimal(1),
+				return {'booking_number':Decimal(str(booking_search[0][0])[:-2]) + Decimal(1),
 						'year_book_number':year,'month_book_number':month}
 				
     @api.model
@@ -89,7 +103,6 @@ class Lead(models.Model):
     
     price = fields.Float('Price')
     #product_ids = fields.Many2many('product.template', 'crm_product_template_rel', 'crm_id', 'product_id', string='Products')
-
     
     date_and_time = fields.Datetime('Date and Time')#, related='partner_id.date_time', store=False)
     
@@ -98,26 +111,26 @@ class Lead(models.Model):
     employee_id = fields.Many2one('hr.employee', string='Driver assigned')
     
     #customer_id = fields.Many2one('res.partner', string='Customer')
-    partner_id_name = fields.Char("Customer name", related='partner_id.name', store=False)
-    partner_id_book_number = fields.Char("Customer ID Number", related='partner_id.id_book_number', store=False)
-    user_id = fields.Many2one(related='partner_id.user_id', store=False)
+    partner_id_name = fields.Char("Booking name", related='partner_id.name', store=False)
+    partner_id_book_number = fields.Char("Booking ID Number", related='partner_id.id_book_number', store=False)
+    #user_id = fields.Many2one(related='partner_id.user_id', store=False)
     supplier_id = fields.Many2one(related='partner_id.supplier_id', store=False)
     flight_number = fields.Char("Flight number", related='partner_id.flight_number', store=False)
-    customer_email = fields.Char('Customer email', compute='_get_data_customer')
-    customer_mobile = fields.Char('Customer mobile', compute='_get_data_customer')
+    customer_email = fields.Char('Booking email', compute='_get_data_customer')
+    customer_mobile = fields.Char('Booking mobile', compute='_get_data_customer')
     
     priority = fields.Selection(PRIORITIES, string='Rating', index=True, default=PRIORITIES[0][0])
     
     id_number = fields.Char('ID number', compute='_get_data_id_number', search='_search_data_id_number', store=False)
     id_number_type = fields.Selection([
-					('book', 'Booking (BOOK-)'),],
+					('book', 'Booking (BOOK)'),],
 					string='ID number type', default='book')
     
-    booking_number = fields.Float('Booking number', digits=(19,0)) #default=_get_data_booking_number)
+    booking_number = fields.Char('Booking number')#, digits=(19,0)) #default=_get_data_booking_number)
 								
-    year_book_number = fields.Integer('Year', default=_get_current_year)
+    year_book_number = fields.Char('Year', default=_get_current_year)
     
-    month_book_number = fields.Integer('Month', default=_get_current_month)
+    month_book_number = fields.Char('Month', default=_get_current_month)
     
     #flight_number = fields.Char('Flight number')
     
@@ -149,16 +162,61 @@ class Lead(models.Model):
 				else:
 					booking = "ID-"
 				
-				record.id_number = booking + str(record.year_book_number) + str(record.month_book_number) + "-" + str(record.booking_number)[:-2]
-            elif record.booking_number == False or record.booking_number == 0:
+				record.id_number = booking + str(record.year_book_number) + "-" + str(record.month_book_number) + "-" + str(record.booking_number)
+            elif record.booking_number == False or record.booking_number == '':
+				print "record.booking_number " + str(record.booking_number)
 				record.id_number = "Without booking number"
                 
     def _search_data_id_number(self, operator, value):
-		if value[:5] == 'BOOK-':
-			if len(value) > 3:
-				return [('booking_number', operator, value[5:])]
-			else:
-				return [('booking_number', operator, '')]
+		#if value[:5] == 'BOOK-':
+		book_type = ''
+		year = ''
+		month = ''
+		number = ''
+		if len(value) > 3:
+			all_the_other = value
+			all_the_other = all_the_other.split('-')
+			
+			count = len(all_the_other)
+			#print "len(all_the_other) " + str(count) + " all_the_other[0] " + all_the_other[0]
+			print "operator " + operator
+			
+			if operator == "ilike":
+				operator = "=ilike"
+			elif operator == "like":
+				operator = "=like"
+			
+			list_cond = []
+			if count < 5:
+				if count > 0:
+					book_type = all_the_other[0]
+					if operator == "=ilike" or operator == "=like":
+						book_type = book_type+"%"
+					list_cond.append(('id_number_type', operator, book_type))
+				if count > 1:
+					year = all_the_other[1]
+					if operator == "=ilike" or operator == "=like":
+						year = year+"%"
+					list_cond.append(('year_book_number', operator, year))
+				if count > 2:
+					month = all_the_other[2]
+					if operator == "=ilike" or operator == "=like":
+						month = month+"%"
+					list_cond.append(('month_book_number', operator, month))
+				if count > 3:
+					number = all_the_other[3]
+					if operator == "=ilike" or operator == "=like":
+						number = number+"%"
+					list_cond.append(('booking_number', operator, number))
+				#print str(['&',('year_book_number', operator, year),'&',('month_book_number', operator, month),('booking_number', operator, number)])
+				crm_lead_ids = self.env['crm.lead'].search(
+					list_cond
+				)
+				print str(list_cond)
+				list_cond = crm_lead_ids.ids
+			return [('id', 'in', list_cond)]
+		else:
+			return [('id', 'in', [])]
 				
     """
 		res = []
@@ -218,7 +276,7 @@ class Lead(models.Model):
             if record.partner_id:
                 record.customer_email = record.partner_id.email
                 record.customer_mobile = record.partner_id.mobile
-                record.user_id = record.partner_id.user_id
+                #record.user_id = record.partner_id.user_id
                 record.supplier_id = record.partner_id.supplier_id
     
     @api.onchange('partner_id') # if these fields are changed, call method
@@ -230,7 +288,7 @@ class Lead(models.Model):
             self.partner_id_book_number = self.partner_id.id_book_number
             #self.partner_id_supplier = self.partner_id.supplier_id.name
             self.partner_id_flight_number = self.partner_id.flight_number
-            self.user_id = self.partner_id.user_id
+            #self.user_id = self.partner_id.user_id
             self.supplier_id = self.partner_id.supplier_id
             #self.date_and_time = self.partner_id.date_time
 

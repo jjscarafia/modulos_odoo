@@ -7,7 +7,7 @@ import fleet_vehicle_h
 import hr_airports
 import hr_languages
 import hr_city
-import hr_suppliers
+#import hr_suppliers
 import crm_lead_h
 import sale_order_h
 import sale_order_line_h
