@@ -3,7 +3,7 @@
 
 {
     'name': 'Modifications Odoo 10',
-    'depends': ['base','hr','fleet','crm','sale','account'],
+    'depends': ['base','hr','fleet','crm','sale','account','mail'],
     'description': """
 Assets management
 =================
