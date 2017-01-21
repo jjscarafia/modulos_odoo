@@ -30,6 +30,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/crm_lead_h.xml',
         'views/sale_h.xml',
         'views/account_invoice_h.xml',
+        'views/mail_mail_h.xml',
         'security/ir.model.access.csv',
     ],
     'qweb': [
