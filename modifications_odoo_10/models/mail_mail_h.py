@@ -41,3 +41,8 @@ class MailMail(models.Model):
 			[('author_id', '=', res_user_ids.partner_id.id)]
 		)
 		return [('id', 'in', mail_mail_ids.ids)]
+		
+    @api.onchange('author_id') # if these fields are changed, call method
+    def check_change_employee(self):
+        if self.author_id:
+            self.email_from = self.author_id.email

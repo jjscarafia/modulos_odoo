@@ -6,9 +6,20 @@
         <field name="inherit_id" ref="mail.view_mail_form"/>
         <field name="arch" type="xml">
             
-            <field name="author_id" position="attributes">
-				<attribute name="readonly">True</attribute>
+            <xpath expr="//form/sheet/div[1]" position = "replace">
+				<div style="vertical-align: top;">
+					<div groups="hr.group_hr_manager">
+						by <field name="author_id" class="oe_inline" string="User"/> on <field name="date" readonly="1" class="oe_inline"/>
+					</div>
+					<button name="%(mail.action_email_compose_message_wizard)d" string="Reply" type="action" icon="fa-reply text-warning"
+						context="{'default_composition_mode':'reply', 'default_parent_id': mail_message_id}" states='received,sent,exception,cancel'/>
+				</div>
+            </xpath>
+            <!--
+            <field name="author_id" position="replace">
+				<field name="author_id" class="oe_inline" string="User" groups="hr.group_hr_manager"/>
             </field>
+            -->
             
             <field name="email_from" position="attributes">
 				<attribute name="readonly">True</attribute>
