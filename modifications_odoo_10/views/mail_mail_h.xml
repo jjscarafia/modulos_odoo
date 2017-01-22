@@ -38,6 +38,10 @@
 				<attribute name="invisible">False</attribute>
             </field>
             
+            <field name="state" position="attributes">
+				<attribute name="invisible">False</attribute>
+            </field>
+            
         </field>
     </record>
     
@@ -73,13 +77,23 @@
 	</record>
     
     <record id="action_view_mail_mail_my_emails_h" model="ir.actions.act_window">
-		<field name="name">My Emails</field>
+		<field name="name">Received</field>
 		<field name="res_model">mail.mail</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="context">{}</field>
 		<field name="search_view_id" ref="view_my_mail_search"/>
-		<field name="domain">[('is_user_uid','=',True)]</field>
+		<field name="domain">[('is_user_my_emails_uid','=',True),]</field>
+	</record>
+	
+	<record id="action_view_mail_mail_other_emails_h" model="ir.actions.act_window">
+		<field name="name">Outgoing, Sent and Failed</field>
+		<field name="res_model">mail.mail</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{}</field>
+		<field name="search_view_id" ref="view_my_mail_search"/>
+		<field name="domain">[('is_other_user_emails_uid','=',True)]</field>
 	</record>
 	
 	<menuitem
@@ -98,6 +112,9 @@
     <!--<menuitem name="Email" id="menu_mail_mail_h" parent="menu_config_emails_child_h" action="mail.action_view_mail_mail" 
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"/>-->
     
-    <menuitem name="My Emails" id="menu_mail_mail_h" parent="menu_config_emails_child_h" action="action_view_mail_mail_my_emails_h" 
+    <menuitem name="Received" id="menu_mail_my_mail_h" parent="menu_config_emails_child_h" action="action_view_mail_mail_my_emails_h" 
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"/>
+        
+    <menuitem name="Outgoing, Sent and Failed" id="menu_mail_other_mail_h" parent="menu_config_emails_child_h" action="action_view_mail_mail_other_emails_h" 
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"/>
 </odoo>
