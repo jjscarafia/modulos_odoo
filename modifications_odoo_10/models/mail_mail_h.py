@@ -36,7 +36,7 @@ class MailMail(models.Model):
 			if (res_user_ids.partner_id.email in emails_to or \
 				res_user_ids.partner_id.email in emails_cc or \
 				res_user_ids.partner_id.id in self.recipient_ids) and \
-				self.state == 'received':
+				self.state in ['received','sent']:
 				self.is_user_uid = True
 			else:
 				self.is_user_uid = False
@@ -52,7 +52,7 @@ class MailMail(models.Model):
 			['|','|',('email_to', 'ilike', res_user_ids.partner_id.email),
 			('email_cc', 'ilike', res_user_ids.partner_id.email),
 			('recipient_ids', '=', res_user_ids.partner_id.id),
-			('state','=','received')]
+			('state', 'in', ['received','sent'])]
 		)
 		
 		ids = ids + mail_mail_ids.ids
@@ -69,7 +69,7 @@ class MailMail(models.Model):
 			
 			if (self.author_id.id == res_user_ids.partner_id.id or \
 				self.email_from == res_user_ids.partner_id.email) and \
-				self.state in ['outgoing','sent','exception']:
+				self.state in ['outgoing','sent','exception','cancel']:
 				self.is_user_uid = True
 			else:
 				self.is_user_uid = False
@@ -84,7 +84,7 @@ class MailMail(models.Model):
 		mail_mail_ids = self.env['mail.mail'].search(
 			['|',('author_id', '=', res_user_ids.partner_id.id),
 			('email_from', '=', res_user_ids.partner_id.email),
-			('state','in',['outgoing','sent','exception'])]
+			('state','in',['outgoing','sent','exception','cancel'])]
 		)
 		
 		ids = ids + mail_mail_ids.ids
