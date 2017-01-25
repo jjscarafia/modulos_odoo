@@ -81,10 +81,13 @@ class Partner(models.Model):
     
     @api.multi
     def write(self, vals):
+        
+        result = super(Partner, self).write(vals)
+        
         diff = dict(show_address=None, show_address_only=None, show_email=None)
         names = dict(self.with_context(**diff).name_get())
         
         for partner in self:
             super(Partner, partner).write({'display_name': names.get(partner.id)})
 
-        return super(Partner, self).write(vals)
+        return result

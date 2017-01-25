@@ -199,10 +199,9 @@
                 <div>
 					<field name="tag_ids"/>
 				</div>
-				<field name="booking_number" invisible="1"/>
                 <field name="year_book_number" invisible="1"/>
                 <field name="month_book_number" invisible="1"/>
-				<div attrs="{'invisible':[('booking_number','not in',[False,'']),('year_book_number','not in',[False,'']),('month_book_number','not in',[False,''])]}">
+				<div attrs="{'invisible':[('year_book_number','not in',[False,'']),('month_book_number','not in',[False,''])]}">
 					<a type="button">
 						<button string="Generate booking number" class="oe_highlight" name="button_generate_booking_number" type="object">
 							<span>Generate booking number</span>
