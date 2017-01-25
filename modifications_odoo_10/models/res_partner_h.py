@@ -28,7 +28,8 @@ class Partner(models.Model):
     flight_number = fields.Char('Flight Number')
     contact = fields.Boolean('Is Contact')
     is_booking = fields.Boolean('Is a Booking')
-   
+    supplier_code = fields.Char('Supplier code')
+    
     def name_get(self):
         res = []
         for partner in self:

@@ -17,6 +17,7 @@
             <field name="name" position="before">
 				<div>
 					<field name="id_book_number" placeholder="Booking number" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}"/>
+                    <field name="supplier_code" placeholder="Supplier code" attrs="{'invisible': [('supplier', '=', False)], 'required': [('supplier', '=', True)]}"/>
 				</div>
             </field>
             
@@ -120,6 +121,11 @@
 			<kanban position = "attributes">
                 <attribute name="default_order">id_book_number</attribute>
             </kanban>
+            
+            <field name="type" position="after">
+                <field name="is_booking"/>
+                <field name="supplier"/>
+            </field>
 			
             <xpath expr="//t[@t-name='kanban-box']" position="replace">
 				<t t-name="kanban-box">
@@ -148,7 +154,12 @@
 						</div>
 						<div class="oe_kanban_details">
 							<!--<strong class="oe_partner_heading"><field name="display_name"/></strong>-->
-							<strong class="oe_partner_heading"><field name="id_book_number"/></strong>
+                            <t t-if="record.is_booking.raw_value === true">
+                                <strong class="oe_partner_heading"><field name="id_book_number"/></strong>
+                            </t>    
+                            <t t-if="record.supplier.raw_value === true">
+                                <strong class="oe_partner_heading"><field name="supplier_code"/></strong>
+                            </t>
 							<strong class="oe_partner_heading"><field name="name"/></strong>
 							<ul>
 								<li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>

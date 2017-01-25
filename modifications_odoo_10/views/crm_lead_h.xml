@@ -190,7 +190,8 @@
         <field name="arch" type="xml">
 			
 			<kanban position = "attributes">
-                <attribute name="default_order">year_book_number_compute,month_book_number_compute,booking_number_compute</attribute>
+                <!--<attribute name="default_order">year_book_number_compute,month_book_number_compute,booking_number_compute</attribute>-->
+                <attribute name="default_order">id DESC</attribute>
             </kanban>
 			
             <xpath expr="//t[@t-name='kanban-box']//div[contains(@class, 'oe_kanban_content')]" position="replace">

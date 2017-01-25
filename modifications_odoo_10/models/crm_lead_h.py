@@ -47,14 +47,17 @@ class Lead(models.Model):
 	"""
 				
     @api.model
-    def _get_data_booking_number_generate(self):
-		year = datetime.datetime.now().year
-		month = datetime.datetime.now().month
+    def _get_data_booking_number_generate(self, year_in, month_in, supplier_code, id_book_number):
+		year = year_in
+		month = month_in
 		#booking_search = self.search([('booking_number', '>', 0),
 		#								('year_book_number','=',year),
 		#								('month_book_number','=',month)], limit=1, order="booking_number_compute DESC")
+        
+		return {'booking_number':supplier_code + "-" + id_book_number,'year_book_number':year,'month_book_number':month}
 		
-		string = '''
+		"""
+        string = '''
 			booking_number != '' and
 			year_book_number = '%s' and month_book_number = '%s'
 		'''
@@ -79,6 +82,7 @@ class Lead(models.Model):
 						'year_book_number':year,'month_book_number':month,
                         'booking_number_compute':Decimal(str(booking_search[0][0])[:-2]) + Decimal(1),
 						'year_book_number_compute':year,'month_book_number_compute':month}
+        """
 				
     @api.model
     def _get_current_year(self):
@@ -135,9 +139,9 @@ class Lead(models.Model):
     
     month_book_number = fields.Char('Month', default=_get_current_month)
     
-    booking_number_compute = fields.Float('Booking number', digits=(19,0), compute="_get_data_crm_h", store=True)
-    year_book_number_compute = fields.Integer('Year', compute="_get_data_crm_h", store=True)
-    month_book_number_compute = fields.Integer('Month', compute="_get_data_crm_h", store=True)
+    #booking_number_compute = fields.Float('Booking number', digits=(19,0), compute="_get_data_crm_h", store=True)
+    #year_book_number_compute = fields.Integer('Year', compute="_get_data_crm_h", store=True)
+    #month_book_number_compute = fields.Integer('Month', compute="_get_data_crm_h", store=True)
     
     #flight_number = fields.Char('Flight number')
     
@@ -149,13 +153,60 @@ class Lead(models.Model):
 	
     @api.model
     def create(self, vals):
-        vals.update(self._get_data_booking_number_generate())
+        if 'supplier_id' in vals and 'partner_id' in vals:
+            supplier_ids = self.env['res.partner'].search(
+                    [('id','=',vals['supplier_id'])]
+                )
+            partner_ids = self.env['res.partner'].search(
+                    [('id','=',vals['partner_id'])]
+                )
+            
+            vals.update(self._get_data_booking_number_generate(
+                datetime.datetime.now().year,
+                datetime.datetime.now().month,
+                supplier_ids.supplier_code, 
+                partner_ids.id_book_number))
         res_id = super(Lead, self).create(vals)
         return res_id
     
     @api.multi
     def write(self, vals):
-        if 'booking_number' in vals:
+        
+        crm_ids = self.search(
+                    [('id','=',self.id)]
+            )
+        
+        if 'year_book_number' in vals:
+            year = vals['year_book_number']
+        else:
+            year = crm_ids.year_book_number
+        
+        if 'month_book_number' in vals:
+            year = vals['month_book_number']
+        else:
+            month = crm_ids.month_book_number
+        
+        if 'supplier_id' in vals:
+            supplier_code = self.env['res.partner'].search(
+                    [('id','=',vals['supplier_id'])]
+                ).supplier_code
+        else:
+            supplier_code = crm_ids.partner_id.supplier_id.supplier_code
+            
+        if 'partner_id' in vals:
+            id_book_number = self.env['res.partner'].search(
+                    [('id','=',vals['partner_id'])]
+            ).id_book_number
+        else:
+            id_book_number = crm_ids.partner_id.id_book_number
+                
+        vals.update(self._get_data_booking_number_generate(
+                year,
+                month,
+                supplier_code, 
+                id_book_number))
+        
+        """if 'booking_number' in vals:
             vals.update({'booking_number_compute': vals['booking_number']})
         elif 'booking_number_compute' in vals:
             vals.update({'booking_number': vals['booking_number_compute']})
@@ -169,6 +220,7 @@ class Lead(models.Model):
             vals.update({'month_book_number_compute': vals['month_book_number']})
         elif 'month_book_number_compute' in vals:
             vals.update({'month_book_number': vals['month_book_number_compute']})
+        """
 
         return super(Lead, self).write(vals)
 	
@@ -176,7 +228,11 @@ class Lead(models.Model):
     def button_generate_booking_number(self):
 		book_search = self.search([('id', '=', self.id)], limit=1)
 		if book_search.booking_number == False or book_search.booking_number == 0:
-			book_search.write(self._get_data_booking_number_generate())
+			book_search.write(self._get_data_booking_number_generate(
+                datetime.datetime.now().year,
+                datetime.datetime.now().month,
+                book_search.partner_id.supplier_id.supplier_code, 
+                book_search.partner_id.id_book_number))
 		return True
     
     def _get_data_id_number(self):
@@ -297,9 +353,10 @@ class Lead(models.Model):
     
     def _get_data_crm_h(self):
         for record in self:
-            record.booking_number_compute = Decimal(record.booking_number)
-            record.year_book_number_compute = int(record.year_book_number)
-            record.month_book_number_compute = int(record.month_book_number)
+            record.booking_number = record.partner_id.supplier_id.supplier_code + "-" + record.partner_id.id_book_number
+            #record.booking_number_compute = Decimal(record.booking_number)
+            #record.year_book_number_compute = int(record.year_book_number)
+            #record.month_book_number_compute = int(record.month_book_number)
     
     def _get_data_customer(self):
         for record in self:
