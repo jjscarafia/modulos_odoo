@@ -27,6 +27,11 @@
 
 	<record model="ir.actions.act_window" id="base.action_partner_form">
         <field name="name">Booking</field>
+        <field name="context">{'default_customer':1, 'search_default_customer':1}</field>
+    </record>
+    
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="context">{'default_contact':1, 'search_default_type_contact':1}</field>
     </record>
     
     <record model="ir.ui.menu" id="sales_team.menu_partner_form">
