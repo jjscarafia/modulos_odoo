@@ -27,8 +27,7 @@ class Partner(models.Model):
     date_time = fields.Datetime('Date and Time')
     flight_number = fields.Char('Flight Number')
     contact = fields.Boolean('Is Contact')
-    customer = fields.Boolean(string='Is a Customer', default=False,
-                               help="Check this box if this contact is a customer.")
+    is_booking = fields.Boolean('Is a Booking')
    
     def name_get(self):
         res = []

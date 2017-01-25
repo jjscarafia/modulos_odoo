@@ -16,7 +16,7 @@
             
             <field name="name" position="before">
 				<div>
-					<field name="id_book_number" placeholder="Booking number" attrs="{'invisible': [('customer', '=', False)], 'required': [('customer', '=', True)]}"/>
+					<field name="id_book_number" placeholder="Booking number" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}"/>
 				</div>
             </field>
             
@@ -32,19 +32,24 @@
             </field>-->
             
             <field name="phone" position="before">
-                <field name="supplier_id" domain="[('supplier','=',True)]" attrs="{'invisible': [('customer', '=', False)], 'required': [('customer', '=', True)]}"/>
+                <field name="supplier_id" domain="[('supplier','=',True)]" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}"/>
             </field>
             
             <field name="email" position="after">
-				<field name="pick_up_address" attrs="{'invisible': [('customer', '=', False)]}"/>
-				<field name="dest_address" attrs="{'invisible': [('customer', '=', False)]}"/>
-				<field name="date_time" attrs="{'invisible': [('customer', '=', False)]}"/>
-				<field name="flight_number" attrs="{'invisible': [('customer', '=', False)]}"/>
+				<field name="pick_up_address" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+				<field name="dest_address" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+				<field name="date_time" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+				<field name="flight_number" attrs="{'invisible': [('is_booking', '=', False)]}"/>
             </field>
             
             <field name="category_id" position="after">
 				<field name="contact" />
 			</field>
+			
+			<field name="customer" position="after">
+				<field name="is_booking" />
+			</field>
+			
             
             <!--
             <field name="coach_id" position="attributes">
@@ -171,6 +176,9 @@
 			<xpath expr="filter[@name='type_person']" position="before">
 				<filter string="Contacts" name="type_contact" domain="[('contact','=',True)]"/>
 				<!--domain="[('customer','=',False),('supplier','=',0),('active','=',True)]"/>-->
+			</xpath>
+			<xpath expr="filter[@name='customer']" position="before">
+				<filter string="Booking" name="type_booking" domain="[('customer','=',1), ('parent_id', '=', False), ('is_booking', '=', True)]"/>
 			</xpath>
 		</field>
 	</record>
