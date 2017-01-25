@@ -31,13 +31,27 @@ class Partner(models.Model):
    
     def name_get(self):
         res = []
-        for record in self:
-            if record.id_book_number == False:
-				number = ""
-            else:
-				number = record.id_book_number
-            name = number + " " + record.name
-            res.append((record.id, name))
+        for partner in self:
+            name = partner.name or ''
+
+            if partner.company_name or partner.parent_id:
+                if not name and partner.type in ['invoice', 'delivery', 'other']:
+                    name = dict(self.fields_get(['type'])['type']['selection'])[partner.type]
+                if not partner.is_company and not partner.is_booking:
+                    name = "%s, %s" % (partner.commercial_company_name or partner.parent_id.name, name)
+            if self._context.get('show_address_only'):
+                name = partner._display_address(without_company=True)
+            if self._context.get('show_address'):
+                name = name + "\n" + partner._display_address(without_company=True)
+            name = name.replace('\n\n', '\n')
+            name = name.replace('\n\n', '\n')
+            if self._context.get('show_email') and partner.email:
+                name = "%s <%s>" % (name, partner.email)
+            if partner.id_book_number and partner.is_booking:
+                name = "%s %s" % (partner.id_book_number, name)
+            if self._context.get('html_format'):
+                name = name.replace('\n', '<br/>')
+            res.append((partner.id, name))
         return res
     
     @api.depends('id_book_number')

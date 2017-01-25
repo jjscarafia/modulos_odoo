@@ -25,6 +25,10 @@
 				<attribute name="readonly">True</attribute>
             </field>
             
+            <field name="recipient_ids" position="attributes">
+                <attribute name="context">{'show_address':False, 'show_address_only': False, 'show_email':True}</attribute>
+            </field>
+            
         </field>
     </record>
     
