@@ -50,6 +50,8 @@ class Partner(models.Model):
                 name = "%s <%s>" % (name, partner.email)
             if partner.id_book_number and partner.is_booking:
                 name = "%s %s" % (partner.id_book_number, name)
+            elif partner.supplier_code and partner.supplier:
+                name = "%s %s" % (partner.supplier_code, name)
             if self._context.get('html_format'):
                 name = name.replace('\n', '<br/>')
             res.append((partner.id, name))
@@ -65,3 +67,13 @@ class Partner(models.Model):
     _sql_constraints = {
 		('booking_id_number_uniq', 'unique(supplier_id,id_book_number)', "The booking number can't be repeated, try again please!.")
 	}
+    
+    @api.multi
+    def write(self, vals):
+        diff = dict(show_address=None, show_address_only=None, show_email=None)
+        names = dict(self.with_context(**diff).name_get())
+        
+        for partner in self:
+            super(Partner, partner).write({'display_name': names.get(partner.id)})
+
+        return super(Partner, self).write(vals)
