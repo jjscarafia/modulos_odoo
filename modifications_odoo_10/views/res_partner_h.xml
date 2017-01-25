@@ -42,6 +42,10 @@
 				<field name="flight_number" attrs="{'invisible': [('customer', '=', False)]}"/>
             </field>
             
+            <field name="category_id" position="after">
+				<field name="contact" />
+			</field>
+            
             <!--
             <field name="coach_id" position="attributes">
                 <attribute name="invisible">True</attribute>
@@ -158,4 +162,16 @@
             </xpath>
         </field>
     </record>
+    
+	<record id="view_res_partner_filter_inherit_filter" model="ir.ui.view">
+		<field name="name">res.partner.select.inherit</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_res_partner_filter"/>
+		<field name="arch" type="xml">
+			<xpath expr="filter[@name='type_person']" position="before">
+				<filter string="Contacts" name="type_contact" domain="[('contact','=',True)]"/>
+				<!--domain="[('customer','=',False),('supplier','=',0),('active','=',True)]"/>-->
+			</xpath>
+		</field>
+	</record>
 </odoo>

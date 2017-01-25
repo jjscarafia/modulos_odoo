@@ -26,6 +26,7 @@ class Partner(models.Model):
     dest_address = fields.Text('Destinations Address')
     date_time = fields.Datetime('Date and Time')
     flight_number = fields.Char('Flight Number')
+    contact = fields.Boolean('Is Contact')
    
     def name_get(self):
         res = []
