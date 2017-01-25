@@ -52,6 +52,8 @@
 			<search string="Email Search">
 				<field name="email_from" filter_domain="['|', '|',('email_from','ilike',self), ('email_to','ilike',self), ('subject','ilike',self)]" string="Email"/>
 				<field name="date"/>
+                <filter name="my_emails_received" string="My Emails Received" domain="[('is_user_my_emails_uid','=',True)]" context="{'my_emails':True}"/>
+                <filter name="my_emails_outgoing" string="My Emails Out" domain="[('is_other_user_emails_uid','=',True)]" context="{'my_emails':True}"/>
 				<filter name="received" string="Received" domain="[('state','=','received')]"/>
 				<filter name="outgoing" string="Outgoing" domain="[('state','=','outgoing')]"/>
 				<filter name="sent" string="Sent" domain="[('state','=','sent')]"/>
@@ -81,7 +83,7 @@
 		<field name="res_model">mail.mail</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="context">{}</field>
+		<field name="context">{'search_default_my_emails_received':1}</field>
 		<field name="search_view_id" ref="view_my_mail_search"/>
 		<field name="domain">[('is_user_my_emails_uid','=',True),]</field>
 	</record>
@@ -91,7 +93,7 @@
 		<field name="res_model">mail.mail</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="context">{}</field>
+		<field name="context">{'search_default_my_emails_outgoing':1}</field>
 		<field name="search_view_id" ref="view_my_mail_search"/>
 		<field name="domain">[('is_other_user_emails_uid','=',True)]</field>
 	</record>

@@ -14,6 +14,8 @@ from odoo import tools
 from odoo.addons.base.ir.ir_mail_server import MailDeliveryException
 from odoo.tools.safe_eval import safe_eval
 
+from openerp import SUPERUSER_ID
+
 _logger = logging.getLogger(__name__)
 
 class MailMail(models.Model):
@@ -42,22 +44,35 @@ class MailMail(models.Model):
 				self.is_user_uid = False
 
     def _search_user_received_uid(self, operator, value):
-		ids=[]
-		
-		res_user_ids = self.env['res.users'].search(
-			[('id', '=', self.env.uid)]
-		)
-		
-		mail_mail_ids = self.env['mail.mail'].search(
-			['|','|',('email_to', 'ilike', res_user_ids.partner_id.email),
-			('email_cc', 'ilike', res_user_ids.partner_id.email),
-			('recipient_ids', '=', res_user_ids.partner_id.id),
-			('state', 'in', ['received','sent'])]
-		)
-		
-		ids = ids + mail_mail_ids.ids
-		
-		return [('id', 'in', ids)]
+        ids=[]
+
+        res_user_ids = self.env['res.users'].search(
+            [('id', '=', self.env.uid)]
+        )
+
+        if self.env.uid == SUPERUSER_ID:
+            if self.env.context.get("my_emails",False) == True:
+                mail_mail_ids = self.env['mail.mail'].search(
+                    ['|','|',('email_to', 'ilike', res_user_ids.partner_id.email),
+                    ('email_cc', 'ilike', res_user_ids.partner_id.email),
+                    ('recipient_ids', '=', res_user_ids.partner_id.id),
+                    ('state', 'in', ['received','sent'])]
+                )
+            else:
+                mail_mail_ids = self.env['mail.mail'].search(
+                    [('state', 'in', ['received','sent'])]
+                )
+        else:
+            mail_mail_ids = self.env['mail.mail'].search(
+                ['|','|',('email_to', 'ilike', res_user_ids.partner_id.email),
+                ('email_cc', 'ilike', res_user_ids.partner_id.email),
+                ('recipient_ids', '=', res_user_ids.partner_id.id),
+                ('state', 'in', ['received','sent'])]
+            )
+        
+        ids = ids + mail_mail_ids.ids
+
+        return [('id', 'in', ids)]
 		
     def _get_user_sent_uid(self):
         for record in self:
@@ -75,21 +90,33 @@ class MailMail(models.Model):
 				self.is_user_uid = False
 
     def _search_user_sent_uid(self, operator, value):
-		ids=[]
-		
-		res_user_ids = self.env['res.users'].search(
-			[('id', '=', self.env.uid)]
-		)
-		
-		mail_mail_ids = self.env['mail.mail'].search(
-			['|',('author_id', '=', res_user_ids.partner_id.id),
-			('email_from', '=', res_user_ids.partner_id.email),
-			('state','in',['outgoing','sent','exception','cancel'])]
-		)
-		
-		ids = ids + mail_mail_ids.ids
-		
-		return [('id', 'in', ids)]
+        ids=[]
+
+        res_user_ids = self.env['res.users'].search(
+            [('id', '=', self.env.uid)]
+        )
+
+        if self.env.uid == SUPERUSER_ID:
+            if self.env.context.get("my_emails",False) == True:
+                mail_mail_ids = self.env['mail.mail'].search(
+                    ['|',('author_id', '=', res_user_ids.partner_id.id),
+                    ('email_from', '=', res_user_ids.partner_id.email),
+                    ('state','in',['outgoing','sent','exception','cancel'])]
+                )
+            else:
+                mail_mail_ids = self.env['mail.mail'].search(
+                    [('state','in',['outgoing','sent','exception','cancel'])]
+                )
+        else:
+            mail_mail_ids = self.env['mail.mail'].search(
+                ['|',('author_id', '=', res_user_ids.partner_id.id),
+                ('email_from', '=', res_user_ids.partner_id.email),
+                ('state','in',['outgoing','sent','exception','cancel'])]
+            )
+
+        ids = ids + mail_mail_ids.ids
+
+        return [('id', 'in', ids)]
 		
     @api.onchange('author_id') # if these fields are changed, call method
     def check_change_employee(self):
