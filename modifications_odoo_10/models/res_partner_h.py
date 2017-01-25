@@ -29,6 +29,17 @@ class Partner(models.Model):
     contact = fields.Boolean('Is Contact')
     is_booking = fields.Boolean('Is a Booking')
     supplier_code = fields.Char('Supplier code')
+    supplier_code_compute = fields.Char('Supplier code', compute='_get_supplier_data')
+    
+    def _get_supplier_data(self):
+        for record in self:
+            if record.supplier_id:
+                record.supplier_code_compute = record.supplier_id.supplier_code
+                
+    @api.onchange('supplier_id') # if these fields are changed, call method
+    def check_change_supplier(self):
+        if self.supplier_id:
+            self.supplier_code_compute = self.supplier_id.supplier_code
     
     def name_get(self):
         res = []

@@ -34,6 +34,7 @@
             
             <field name="phone" position="before">
                 <field name="supplier_id" domain="[('supplier','=',True)]" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}"/>
+                <field name="supplier_code_compute" attrs="{'invisible': [('is_booking', '=', False)]}"/>
             </field>
             
             <field name="email" position="after">

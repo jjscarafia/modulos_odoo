@@ -74,6 +74,7 @@
             
             <field name="user_id" position="before">
                 <field name="supplier_id" readonly="1"/>
+                <field name="supplier_code_compute" readonly="1"/>
             </field>
             
             <!--<field name="user_id" position="replace">
