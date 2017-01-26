@@ -221,6 +221,9 @@
 				<div>
 					<strong>Booking: </strong><field name="partner_id"/>
 				</div>
+                <div>
+					<strong>Supplier: </strong><field name="supplier_id"/>
+				</div>
 				<div>
 					<strong>Driver: </strong><field name="employee_id"/>
 				</div>
