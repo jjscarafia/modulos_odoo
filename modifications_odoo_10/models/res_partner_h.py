@@ -40,6 +40,12 @@ class Partner(models.Model):
     def check_change_supplier(self):
         if self.supplier_id:
             self.supplier_code_compute = self.supplier_id.supplier_code
+            
+    @api.onchange('supplier_code') # if these fields are changed, call method
+    def check_change_supplier_code(self):
+        if self.supplier_code:
+            code_stripped = self.supplier_code.strip()
+            self.supplier_code = "".join(code_stripped.split())
     
     def name_get(self):
         res = []
