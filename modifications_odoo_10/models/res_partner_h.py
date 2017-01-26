@@ -41,6 +41,12 @@ class Partner(models.Model):
         if self.supplier_id:
             self.supplier_code_compute = self.supplier_id.supplier_code
             
+    @api.onchange('id_book_number') # if these fields are changed, call method
+    def check_change_id_book_number(self):
+        if self.id_book_number:
+            code_stripped = self.id_book_number.strip()
+            self.id_book_number = "".join(code_stripped.split())
+            
     @api.onchange('supplier_code') # if these fields are changed, call method
     def check_change_supplier_code(self):
         if self.supplier_code:
