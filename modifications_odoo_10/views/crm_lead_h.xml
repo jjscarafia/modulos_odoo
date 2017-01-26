@@ -21,6 +21,7 @@
             
             <field name="partner_id" position="after">
 				<field name="partner_id_name" readonly="1"/>
+                <field name="partner_id_book_number" readonly="1"/>
 				<field name="date_and_time"/>
                 <field name="journey"/>
                 <field name="price"/>
@@ -162,7 +163,7 @@
         <field name="arch" type="xml">
 			
             <field name="partner_id" position="replace">
-                <field name="partner_id" string="Booking" domain="[('customer','=',1), ('parent_id', '=', False)]" required="1"/>
+                <field name="partner_id" string="Booking" domain="[('is_booking','=',1), ('customer','=',1), ('parent_id', '=', False)]" required="1"/>
                 <field name="partner_id_name" readonly="1"/>
                 <field name="partner_id_book_number" readonly="1"/>
                 <field name="supplier_id" readonly="1"/>
