@@ -88,7 +88,8 @@ class Partner(models.Model):
             partner.display_name = names.get(partner.id)
 
     _sql_constraints = {
-		('booking_id_number_uniq', 'unique(supplier_id,id_book_number)', "The booking number can't be repeated, try again please!.")
+		('booking_id_number_uniq', 'unique(supplier_id,id_book_number)', "The booking number can't be repeated, try again please!."),
+        ('supplier_code_uniq', 'unique(supplier_code)', "The supplier code can't be repeated, try again please!."),
 	}
     
     @api.multi
