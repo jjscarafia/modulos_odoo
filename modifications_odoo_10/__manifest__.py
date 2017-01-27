@@ -5,7 +5,7 @@
     'name': 'Modifications Odoo 10',
     'depends': ['base','hr','fleet','crm','sale','account','mail',
                 'contacts','account_accountant','l10n_multilang',
-                'hr_expense','hr_payroll'],
+                'hr_expense','hr_payroll','hr_payroll_account'],
     'description': """
 Assets management
 =================
