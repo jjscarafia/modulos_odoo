@@ -38,6 +38,7 @@
             </field>
             
             <field name="address_id" position="replace">
+                <field name="language_ids" widget="many2many_tags"/>
                 <field name="work_location" string="Location"/>
                 <field name="city_id"/>
                 <field name="airport_ids" widget="many2many_tags"/>
@@ -61,11 +62,11 @@
                 <attribute name="string">Work information</attribute>
             </xpath>
             
-            <xpath expr="//form/sheet/notebook/page[@name='public']" position = "before">
+            <!--<xpath expr="//form/sheet/notebook/page[@name='public']" position = "before">
                 <page name="languages" string="Languages">
                     <field name="language_ids" widget="many2many_tags"/>
                 </page>
-            </xpath>
+            </xpath>-->
             
         </field>
     </record>
