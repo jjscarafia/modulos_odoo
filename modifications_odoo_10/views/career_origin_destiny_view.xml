@@ -13,6 +13,7 @@
                                 <field name="city_id" />
                                 <field name="is_origin" />
                                 <field name="is_destiny" />
+                                <field name="is_airport" />
                             </group>
                         </page>>
                     </notebook>
@@ -30,6 +31,7 @@
                 <field name="city_id" />
                 <field name="is_origin" />
                 <field name="is_destiny" />
+                <field name="is_airport" />
             </tree>
         </field>
     </record>
@@ -43,6 +45,7 @@
                 <field name="city_id"/>
 				<filter name="origin" string="Origin" domain="[('is_origin','=',True)]"/>
                 <filter name="destiny" string="Destiny" domain="[('is_destiny','=',True)]"/>
+                <filter name="airport" string="Airport" domain="[('is_airport','=',True)]"/>
 			</search>
 		</field>
 	</record>

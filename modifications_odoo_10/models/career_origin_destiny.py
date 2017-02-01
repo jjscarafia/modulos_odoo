@@ -19,3 +19,4 @@ class career_origin_destiny(models.Model):
     city_id = fields.Many2one('hr.city', string='City', help='City', required=True)
     is_origin = fields.Boolean('Is origin', help='Is origin')
     is_destiny = fields.Boolean('Is destiny', help='Is destiny')
+    is_airport = fields.Boolean('Is airport', help='Is airport')
