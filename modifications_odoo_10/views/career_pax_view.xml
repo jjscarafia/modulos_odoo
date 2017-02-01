@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='career_pax_model_view_form' model='ir.ui.view'>
+        <field name="name">career.pax.form</field>
+        <field name="model">career.pax</field>
+        <field name="arch" type="xml">
+            <form string="Pax">
+                <sheet>
+                    <notebook>
+                        <page string="Pax">
+                            <group>
+                                <field name="code" />
+                                <field name="name" />
+                            </group>
+                        </page>>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='career_pax_model_view_tree' model='ir.ui.view'>
+        <field name="name">career.pax.tree</field>
+        <field name="model">career.pax</field>
+        <field name="arch" type="xml">
+            <tree string="Pax">
+                <field name="code" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_career_pax_search">
+		<field name="name">career.pax.search</field>
+		<field name="model">career.pax</field>
+		<field name="arch" type="xml">
+			<search string="Pax">
+                <field name="code"/>
+                <field name="name"/>
+			</search>
+		</field>
+	</record>
+
+    <record id='career_pax_action' model='ir.actions.act_window'>
+        <field name="name">Career pax</field>
+        <field name="res_model">career.pax</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new pax.
+          </p>
+        </field>
+    </record>
+            
+    <menuitem
+        id="menu_career_pax"
+        name="Career pax"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees_general"
+        action="career_pax_action"
+        sequence="75"/>
+</odoo>
