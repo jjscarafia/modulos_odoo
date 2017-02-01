@@ -37,7 +37,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/career_zone_view.xml',
         'views/career_pax_view.xml',
         'views/career_type_view.xml',
-        'views/product_type_view.xml',
+        'views/product_template_h.xml',
         'security/ir.model.access.csv',
     ],
     'qweb': [
