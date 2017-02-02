@@ -32,6 +32,11 @@ class ChargeCSVFile(models.Model):
     
     csv_file = fields.Binary("CSV File", required=True)
 
+    def insert_row(self, row):
+        print(row['city'], row['origin'], row['is_origin_airport'],
+                    row['zone'], row['destiny'], row['mpc_price'],
+                    row['km'], row['mpc_price_km'], row['career_type'],
+                    row['pax'], row['product_type'])
 
     def charge_csv_file(self):
         csv_decoded = base64.b64decode(self.csv_file)
@@ -46,10 +51,7 @@ class ChargeCSVFile(models.Model):
         with open(csvfile_path) as csvfile:
             reader = csv.DictReader(csvfile, delimiter=';', quotechar='"')
             for row in reader:
-                print(row['city'], row['origin'], row['is_origin_airport'],
-                    row['zone'], row['destiny'], row['mpc_price'],
-                    row['km'], row['mpc_price_km'], row['career_type'],
-                    row['pax'], row['product_type'])
+                self.insert_row(row)
                 string = string + row['city'] + "; " + row['origin'] + "; " + row['is_origin_airport'] + \
                     "; " + row['zone'] + "; " + row['destiny'] + "; " + row['mpc_price'] + \
                     "; " + row['km'] + "; " + row['mpc_price_km'] + "; " + row['career_type'] + \
