@@ -8,6 +8,9 @@ from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
 
+import csv
+#https://docs.python.org/2/library/csv.html
+
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 
 _logger = logging.getLogger(__name__)
