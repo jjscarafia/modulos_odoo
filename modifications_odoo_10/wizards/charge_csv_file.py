@@ -8,7 +8,10 @@ from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
 
+from os import path, mkdir, remove
+
 import csv
+import base64
 #https://docs.python.org/2/library/csv.html
 
 from openerp.exceptions import except_orm, Warning, RedirectWarning
@@ -31,9 +34,33 @@ class ChargeCSVFile(models.Model):
 
 
     def charge_csv_file(self):
-        print self.csv_file
+        csv_decoded = base64.b64decode(self.csv_file)
+        csv_path = path.join(path.dirname(__file__), '')
+        csvfile_name = 'csv-%s.csv' % str(self.id)
+        csvfile_path = csv_path + csvfile_name
+
+        with open(csvfile_path, 'w') as csvfile:
+            csvfile.write(csv_decoded)
+        
+        string = ""
+        with open(csvfile_path) as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=';', quotechar='"')
+            for row in reader:
+                print(row['city'], row['origin'], row['is_origin_airport'],
+                    row['zone'], row['destiny'], row['mpc_price'],
+                    row['km'], row['mpc_price_km'], row['career_type'],
+                    row['pax'], row['product_type'])
+                string = string + row['city'] + "; " + row['origin'] + "; " + row['is_origin_airport'] + \
+                    "; " + row['zone'] + "; " + row['destiny'] + "; " + row['mpc_price'] + \
+                    "; " + row['km'] + "; " + row['mpc_price_km'] + "; " + row['career_type'] + \
+                    "; " + row['pax'] + "; " + row['product_type'] + "\n"
+        
+        #print csvfile_path
+        
+        remove(csvfile_path)
+        
         #raise Warning('Here is the message')
-        raise except_orm('Warning','Here is the message')
+        raise except_orm('Warning','Here is the message: ' + string)
         #raise except_orm('FOO','Lorem ipsum dolor sit amet')
         
     """
