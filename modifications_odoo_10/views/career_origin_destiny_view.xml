@@ -49,6 +49,19 @@
 			</search>
 		</field>
 	</record>
+    
+    <record id='career_airport_action' model='ir.actions.act_window'>
+        <field name="name">Career airport</field>
+        <field name="res_model">career.origin.destiny</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_airport':1,'default_is_origin':1,'default_is_airport':1}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new airport.
+          </p>
+        </field>
+    </record>
 
     <record id='career_origin_action' model='ir.actions.act_window'>
         <field name="name">Career origin</field>
@@ -82,7 +95,7 @@
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
         parent="menu_config_employees_general"
         action="career_origin_action"
-        sequence="75"/>
+        sequence="76"/>
     
     <menuitem
         id="menu_career_destiny"
@@ -90,5 +103,13 @@
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
         parent="menu_config_employees_general"
         action="career_destiny_action"
-        sequence="75"/>
+        sequence="76"/>
+        
+    <menuitem
+        id="menu_career_airport"
+        name="Career airport"
+        groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+        parent="menu_config_employees_general"
+        action="career_airport_action"
+        sequence="76"/>
 </odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="charge_csv_file_view" model="ir.ui.view">
+            <field name="name">charge.csv.file.form</field>
+            <field name="model">charge.csv.file</field>
+            <field name="arch" type="xml">
+                <form string="Charge csv file">
+                    <header>
+                        <button string="Charge csv file" name="charge_csv_file" type="object" default_focus="1" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <field name="csv_file" />
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="charge_csv_file_action">
+            <field name="name">Charge csv file</field>
+            <field name="res_model">charge.csv.file</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem
+            id="menu_charge_csv_file"
+            name="Charge CSV File"
+            parent="menu_config_employees_general"
+            action="charge_csv_file_action"
+            groups="base.group_system"
+            sequence="77"/>
+    </data>
+</odoo>

@@ -16,6 +16,16 @@ class VehicleType(models.Model):
     _description = "Vehicle Type"
     _rec_name = "name"
     
-    name = fields.Char('Vehicle type name', help='Vehicle type name')
-    vehicle_type_code = fields.Char('Vehicle type code', help='Vehicle type code')
-    vehicle_type_description = fields.Text('Vehicle type description', help='Vehicle type description')
+    name = fields.Char('Name', help='Vehicle type name', required=True)
+    description = fields.Text('Description', help='Vehicle type description')
+    code = fields.Char('Code', compute='_compute_code', help='Vehicle type code')
+    
+    def _compute_code(self):
+        for record in self:
+            if record.name:
+                record.code = "_".join(record.name.lower().split())
+
+    @api.onchange('name') # if these fields are changed, call method
+    def check_change_code(self):
+        if self.name:
+            self.code = "_".join(self.name.lower().split())

@@ -19,6 +19,6 @@ import mail_mail_h
 import career_origin_destiny
 import career_zone
 import career_pax
-import career_type
+#import hr_vehicle_type
 
 import product_template_h

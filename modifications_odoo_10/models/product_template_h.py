@@ -22,6 +22,6 @@ class ProductTemplate(models.Model):
     #mpc_price is list_price and standard_price
     km = fields.Float('KMs', help='KMs')
     mpc_price_km = fields.Float('MPC price per KM', help='MPC price per KM')
-    career_type = fields.Many2one('career.type', string='Career type')
+    career_type = fields.Many2one('hr.vehicle.type', string='Career type')
     career_pax = fields.Many2one('career.pax', string='Career pax')
     is_mpc_product = fields.Boolean('Is a MPC Product')

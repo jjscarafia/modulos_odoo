@@ -9,9 +9,9 @@
                     <notebook>
                         <page string="Vehicle Type">
                             <group>
+                                <field name="code" />
                                 <field name="name" />
-                                <field name="vehicle_type_code" />
-                                <field name="vehicle_type_description" />
+                                <field name="description" />
                             </group>
                         </page>>
                     </notebook>
@@ -25,12 +25,23 @@
         <field name="model">hr.vehicle.type</field>
         <field name="arch" type="xml">
             <tree string="Vehicle Types">
+                <field name="code" />
                 <field name="name" />
-                <field name="vehicle_type_code" />
-                <field name="vehicle_type_description" />
+                <field name="description" />
             </tree>
         </field>
     </record>
+    
+    <record model="ir.ui.view" id="view_hr_vehicle_type_search">
+		<field name="name">hr.vehicle.type.search</field>
+		<field name="model">hr.vehicle.type</field>
+		<field name="arch" type="xml">
+			<search string="Vehicle type">
+                <field name="code"/>
+                <field name="name"/>
+			</search>
+		</field>
+	</record>
 
     <record id='hr_vehicle_type_action' model='ir.actions.act_window'>
         <field name="name">Vehicle Type</field>
