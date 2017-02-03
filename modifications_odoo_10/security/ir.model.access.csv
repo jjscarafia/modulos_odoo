@@ -15,6 +15,10 @@ access_hr_employee_city_user,hr.employee.city.user,model_hr_city,,1,0,0,0
 access_hr_employee_city_group,hr.employee.city.group,model_hr_city,,1,0,0,0
 access_hr_employee_city_manager,hr.employee.city.manager,model_hr_city,hr.group_hr_manager,1,1,1,1
 
+access_hr_employee_country_user,hr.employee.country.user,model_hr_country,,1,0,0,0
+access_hr_employee_country_group,hr.employee.country.group,model_hr_country,,1,0,0,0
+access_hr_employee_country_manager,hr.employee.country.manager,model_hr_country,hr.group_hr_manager,1,1,1,1
+
 access_hr_employee_origin_user,hr.employee.origin.user,model_career_origin_destiny,,1,0,0,0
 access_hr_employee_origin_group,hr.employee.origin.group,model_career_origin_destiny,,1,0,0,0
 access_hr_employee_origin_manager,hr.employee.origin.manager,model_career_origin_destiny,hr.group_hr_manager,1,1,1,1

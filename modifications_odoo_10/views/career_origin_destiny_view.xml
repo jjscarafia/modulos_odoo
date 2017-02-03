@@ -10,7 +10,8 @@
                         <page string="Origin or destiny">
                             <group>
                                 <field name="name" />
-                                <field name="city_id" />
+                                <field name="country_id" />
+                                <field name="city_id" context="{'default_country_id':country_id}" domain="[('country_id','=',country_id)]"/>
                                 <field name="is_origin" />
                                 <field name="is_destiny" />
                                 <field name="is_airport" />
@@ -28,6 +29,7 @@
         <field name="arch" type="xml">
             <tree string="Origin or destiny">
                 <field name="name" />
+                <field name="country_id" />
                 <field name="city_id" />
                 <field name="is_origin" />
                 <field name="is_destiny" />

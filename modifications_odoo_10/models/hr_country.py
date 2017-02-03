@@ -8,13 +8,12 @@ from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
 
+
 _logger = logging.getLogger(__name__)
 
-class career_zone(models.Model):
-    _name = "career.zone"
-    _description = "Zone"
+class city(models.Model):
+    _name = "hr.country"
+    _description = "Country"
     _rec_name = "name"
     
-    name = fields.Char('Zone', help='Zone name', required=True)
-    city_id = fields.Many2one('hr.city', string='City', help='City', required=True)
-    country_id = fields.Many2one('hr.country', string='Country', help='Country', required=True)
+    name = fields.Char('Country name', help='Country name', required=True)

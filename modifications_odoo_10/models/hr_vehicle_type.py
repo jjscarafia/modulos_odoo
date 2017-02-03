@@ -18,8 +18,9 @@ class VehicleType(models.Model):
     
     name = fields.Char('Name', help='Vehicle type name', required=True)
     description = fields.Text('Description', help='Vehicle type description')
-    code = fields.Char('Code', compute='_compute_code', help='Vehicle type code')
+    code = fields.Char('Code', compute='_compute_code', help='Vehicle type code', store=True)
     
+    @api.depends('name')
     def _compute_code(self):
         for record in self:
             if record.name:
@@ -29,3 +30,7 @@ class VehicleType(models.Model):
     def check_change_code(self):
         if self.name:
             self.code = "_".join(self.name.lower().split())
+
+    _sql_constraints = {
+       ('hr_vehicle_type_uniq', 'unique(code)', 'Code can not be repeated')
+    }

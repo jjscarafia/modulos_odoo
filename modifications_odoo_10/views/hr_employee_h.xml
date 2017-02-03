@@ -40,7 +40,8 @@
             <field name="address_id" position="replace">
                 <field name="language_ids" widget="many2many_tags"/>
                 <field name="work_location" string="Location"/>
-                <field name="city_id"/>
+                <field name="country_employee_id"/>
+                <field name="city_id" context="{'default_country_id':country_employee_id}" domain="[('country_id','=',country_employee_id)]"/>
                 <field name="airport_ids" widget="many2many_tags"/>
                 <field name="mobile_phone" string="Mobile number"/>
                 <field name="work_email" string="Email address"/>

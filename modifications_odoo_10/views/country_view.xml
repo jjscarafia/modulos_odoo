@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id='hr_city_model_view_form' model='ir.ui.view'>
-        <field name="name">hr.city.form</field>
-        <field name="model">hr.city</field>
+    <record id='hr_country_model_view_form' model='ir.ui.view'>
+        <field name="name">hr.country.form</field>
+        <field name="model">hr.country</field>
         <field name="arch" type="xml">
-            <form string="City">
+            <form string="Country">
                 <sheet>
                     <notebook>
-                        <page string="City">
+                        <page string="Country">
                             <group>
-                                <field name="country_id" />
                                 <field name="name" />
                             </group>
                         </page>>
@@ -19,34 +18,33 @@
         </field>
     </record>
 
-    <record id='hr_city_model_view_tree' model='ir.ui.view'>
-        <field name="name">hr.city.tree</field>
-        <field name="model">hr.city</field>
+    <record id='hr_country_model_view_tree' model='ir.ui.view'>
+        <field name="name">hr.country.tree</field>
+        <field name="model">hr.country</field>
         <field name="arch" type="xml">
-            <tree string="City">
-                <field name="country_id" />
+            <tree string="Country">
                 <field name="name" />
             </tree>
         </field>
     </record>
 
-    <record id='hr_city_action' model='ir.actions.act_window'>
-        <field name="name">City</field>
-        <field name="res_model">hr.city</field>
+    <record id='hr_country_action' model='ir.actions.act_window'>
+        <field name="name">Country</field>
+        <field name="res_model">hr.country</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
-            Click to create a new city.
+            Click to create a new country.
           </p>
         </field>
     </record>
             
     <menuitem
-        id="menu_hr_city"
-        name="City"
+        id="menu_hr_country"
+        name="Country"
         groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
         parent="menu_config_employees_general"
-        action="hr_city_action"
+        action="hr_country_action"
         sequence="75"/>
 </odoo>

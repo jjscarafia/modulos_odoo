@@ -16,4 +16,5 @@ class city(models.Model):
     _description = "City"
     _rec_name = "name"
     
-    name = fields.Char('City name', help='City name')
+    name = fields.Char('City name', help='City name', required=True)
+    country_id = fields.Many2one('hr.country', string='Country name', required=True)

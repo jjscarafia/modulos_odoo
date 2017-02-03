@@ -1,0 +1,15 @@
+city_origin;city_destiny;origin;is_origin_airport;zone;destiny;mpc_price;km;mpc_price_km;career_type;pax;product_type
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 1;Cancun Downtown and Hotel ;19,85;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 2;Puerto Juarez - Isla Mujeres Pier;26,10;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 3;Puerto Morelos Hotel Zone;26,10;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 4;Playa del Carmen Hotel Zone;38,60;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 5;Puerto Aventuras Hotel Zone;44,85;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 6;Akumal Hotel Zone;51,10;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 7;TULUM ZONA HOTELERA-APTO;76,62;0;0;Turística Privado;1-6 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 1;Cancun Downtown and Hotel ;28,70;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 2;Puerto Juarez - Isla Mujeres Pier;38,60;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 3;Puerto Morelos Hotel Zone;38,60;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 4;Playa del Carmen Hotel Zone;57,35;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 5;Puerto Aventuras Hotel Zone;69,85;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 6;Akumal Hotel Zone;82,34;0;0;Turística Privado;7-13 PAX;service
+Cancun;Cancun;MPC - Mexico (Riviera Maya);YES;Zona 7;TULUM ZONA HOTELERA-APTO;124,01;0;0;Turística Privado;7-13 PAX;service

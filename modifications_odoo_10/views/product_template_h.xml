@@ -17,11 +17,13 @@
                 <page string="MPC Information" name="mpc_information" attrs="{'invisible':[('is_mpc_product','=',False)]}">
                     <group>
                         <group name="group_mpc_general">
-                            <field name="city_origin_id" attrs="{'required':[('is_mpc_product','=',True)]}"/>
-                            <field name="city_destiny_id" attrs="{'required':[('is_mpc_product','=',True)]}"/>
-                            <field name="career_zone" domain="['|',('city_id','=',city_origin_id),('city_id','=',city_destiny_id)]"/>
-                            <field name="career_origin" domain="[('is_origin','=',True),('city_id','=',city_origin_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
-                            <field name="career_destiny" domain="[('is_destiny','=',True),('city_id','=',city_destiny_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="country_origin_id" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="country_destiny_id" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="city_origin_id" context="{'default_country_id':country_origin_id}" domain="[('country_id','=',country_origin_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="city_destiny_id" context="{'default_country_id':country_destiny_id}" domain="[('country_id','=',country_destiny_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="career_zone" context="{'default_country_id':country_origin_id, 'default_city_id':city_origin_id}" domain="[('city_id','=',city_origin_id)]"/>
+                            <field name="career_origin" context="{'default_country_id':country_origin_id, 'default_is_origin':1, 'default_city_id':city_origin_id}" domain="[('is_origin','=',True),('city_id','=',city_origin_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
+                            <field name="career_destiny" context="{'default_country_id':country_destiny_id, 'default_is_destiny':1, 'default_city_id':city_destiny_id}" domain="[('is_destiny','=',True),('city_id','=',city_destiny_id)]" attrs="{'required':[('is_mpc_product','=',True)]}"/>
                         </group>
                         <group name="group_mpc_price">
                             <field name="km"/>

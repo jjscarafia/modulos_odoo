@@ -25,6 +25,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/vehicle_type_view.xml',
         'views/airport_view.xml',
         'views/languages_view.xml',
+        'views/country_view.xml',
         'views/city_view.xml',
         #'views/supplier_view.xml',
         'views/resource_calendar_view.xml',

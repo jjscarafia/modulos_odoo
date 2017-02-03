@@ -36,3 +36,4 @@ class Employee(models.Model):
     plate_number = fields.Char('Plate Number', help='Plate Number')
     car_insurance_number = fields.Char('Car Insurance Number', help='Car Insurance Number')
     calendar_ids = fields.Many2many('resource.calendar', 'employee_calendar_rel', 'emp_id', 'calendar_id', string='Working Time')
+    country_employee_id = fields.Many2one('hr.country', string='Country')

@@ -16,8 +16,9 @@ class career_pax(models.Model):
     _rec_name = "name"
     
     name = fields.Char('Pax', help='Pax name', required=True)
-    code = fields.Char('Code', compute='_compute_code', help='Code')
+    code = fields.Char('Code', compute='_compute_code', help='Code', store=True)
 
+    @api.depends('name')
     def _compute_code(self):
         for record in self:
             if record.name:
@@ -27,3 +28,7 @@ class career_pax(models.Model):
     def check_change_code(self):
         if self.name:
             self.code = "_".join(self.name.lower().split())
+
+    _sql_constraints = {
+       ('career_pax_uniq', 'unique(code)', 'Code can not be repeated')
+    }
