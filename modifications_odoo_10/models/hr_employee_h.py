@@ -41,5 +41,8 @@ class Employee(models.Model):
     calendar_ids = fields.Many2many('resource.calendar', 'employee_calendar_rel', 'emp_id', 'calendar_id', string='Working Time')
     country_employee_id = fields.Many2one('hr.country', string='Country')
 
-    city_airport_id = fields.Many2one('hr.city', string="Airport City")
-    country_airport_id = fields.Many2one('hr.country', string="Airport Country")
+    #city_airport_id = fields.Many2one('hr.city', string="Airport City")
+    #country_airport_id = fields.Many2one('hr.country', string="Airport Country")
+    
+    city_airport_ids = fields.Many2many('hr.city', 'employee_city_airport_rel', 'emp_id', 'city_airport_id', string='Cities Airports')
+    country_airport_ids = fields.Many2many('hr.country', 'employee_country_airport_rel', 'emp_id', 'country_airport_id', string='Countries Airports')

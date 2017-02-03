@@ -31,8 +31,4 @@ access_hr_employee_pax_user,hr.employee.pax.user,model_career_pax,,1,0,0,0
 access_hr_employee_pax_group,hr.employee.pax.group,model_career_pax,,1,0,0,0
 access_hr_employee_pax_manager,hr.employee.pax.manager,model_career_pax,hr.group_hr_manager,1,1,1,1
 
-access_hr_employee_type_user,hr.employee.type.user,model_career_type,,1,0,0,0
-access_hr_employee_type_group,hr.employee.type.group,model_career_type,,1,0,0,0
-access_hr_employee_type_manager,hr.employee.type.manager,model_career_type,hr.group_hr_manager,1,1,1,1
-
 access_charge_csv_file_admin,charge.csv.file.admin,model_charge_csv_file,base.group_system,1,1,1,1
