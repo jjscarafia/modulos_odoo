@@ -28,7 +28,10 @@ class Employee(models.Model):
     vehicle_model = fields.Char('Vehicle model', help='Vehicle model')
     driver_license = fields.Char('Driver license', help='Driver license')
     vehicle_color = fields.Char('Vehicle color', help='Vehicle color')
-    airport_ids = fields.Many2many('hr.airport', 'employee_airport_rel', 'emp_id', 'airport_id', string='Airports')
+    
+    #airport_ids = fields.Many2many('hr.airport', 'employee_airport_rel', 'emp_id', 'airport_id', string='Airports')
+    airport_ids = fields.Many2many('career.origin.destiny', 'employee_origin_destiny_airport_rel', 'emp_id', 'airport_id', string='Airports')
+    
     language_ids = fields.Many2many('hr.language', 'employee_language_rel', 'emp_id', 'language_id', string='Language')
     city_id = fields.Many2one('hr.city', string='City')
     landline_number = fields.Char('Landline Number', help='Landline Number')
@@ -37,3 +40,6 @@ class Employee(models.Model):
     car_insurance_number = fields.Char('Car Insurance Number', help='Car Insurance Number')
     calendar_ids = fields.Many2many('resource.calendar', 'employee_calendar_rel', 'emp_id', 'calendar_id', string='Working Time')
     country_employee_id = fields.Many2one('hr.country', string='Country')
+
+    city_airport_id = fields.Many2one('hr.city', string="Airport City")
+    country_airport_id = fields.Many2one('hr.country', string="Airport Country")

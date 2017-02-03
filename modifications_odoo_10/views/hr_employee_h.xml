@@ -42,7 +42,11 @@
                 <field name="work_location" string="Location"/>
                 <field name="country_employee_id"/>
                 <field name="city_id" context="{'default_country_id':country_employee_id}" domain="[('country_id','=',country_employee_id)]"/>
-                <field name="airport_ids" widget="many2many_tags"/>
+                
+                <field name="country_airport_id"/>
+                <field name="city_airport_id" context="{'default_country_id':country_airport_id}" domain="[('country_id','=',country_airport_id)]"/>
+                <field name="airport_ids" widget="many2many_tags" context="{'default_country_id':country_airport_id, 'default_city_id':city_airport_id, 'default_is_airport':True, 'default_is_origin':True}" domain="[('city_id','=',city_airport_id),('is_airport','=',True)]"/>
+                
                 <field name="mobile_phone" string="Mobile number"/>
                 <field name="work_email" string="Email address"/>
                 <field name="landline_number"/>

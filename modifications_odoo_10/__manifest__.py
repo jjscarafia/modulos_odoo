@@ -23,7 +23,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'views/fleet_vehicle_h.xml',
         'views/menu_h.xml',
         'views/vehicle_type_view.xml',
-        'views/airport_view.xml',
+        #'views/airport_view.xml',
         'views/languages_view.xml',
         'views/country_view.xml',
         'views/city_view.xml',
