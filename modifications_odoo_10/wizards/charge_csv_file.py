@@ -186,6 +186,9 @@ class ChargeCSVFile(models.Model):
             ". Origin: " + career_origin_id.name + \
             ", Destiny: " + career_destiny_id.name + "."
 
+        if career_pax_id:
+            product_name = product_name + " " + career_pax_id.name + "."
+            
         if career_zone_id:
             product_name = product_name + " " + career_zone_id.name + "."
         
