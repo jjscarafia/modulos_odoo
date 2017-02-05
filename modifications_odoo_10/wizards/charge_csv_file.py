@@ -181,8 +181,7 @@ class ChargeCSVFile(models.Model):
         product_template_ids = self.env['product.template'].search(
             conditions, limit=1, order="id ASC")
 
-        product_name = "Service from city " + city_origin_id.name + " in " + country_origin_id.name + \
-            " to city " + city_destiny_id.name + " in " + country_destiny_id.name + \
+        product_name = city_origin_id.name + ", " + country_origin_id.name + \
             ". Origin: " + career_origin_id.name + \
             ", Destiny: " + career_destiny_id.name + "."
 

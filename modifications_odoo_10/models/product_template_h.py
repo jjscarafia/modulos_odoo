@@ -31,28 +31,24 @@ class ProductTemplate(models.Model):
     
     mpc_price = fields.Float('MPC Price', help='MPC price', digits=dp.get_precision('Product Price'), related="list_price")
 
-    @api.onchange('city_origin_id', 'city_destiny_id', 'career_origin', 'career_destiny', 'career_zone', 'career_type') # if these fields are changed, call method
+    @api.onchange('city_origin_id', 'city_destiny_id', 'career_origin', 'career_destiny', 'career_zone', 'career_type', 'career_pax') # if these fields are changed, call method
     def check_change_code(self):
         if self.is_mpc_product:
             product_name = self.name
             if self.city_origin_id:
-                product_name = "Service from city " + self.city_origin_id.name
+                product_name = self.city_origin_id.name
                 if self.country_origin_id:
-                    product_name = product_name + " in " + self.country_destiny_id.name
-                    if self.city_destiny_id:
-                        product_name = product_name + " to city " + self.city_destiny_id.name
-                        if self.country_destiny_id:
-                            product_name = product_name + " in " + self.country_destiny_id.name
-                            if self.career_origin:
-                                product_name = product_name + ". Origin: " + self.career_origin.name
-                                if self.career_destiny:
-                                    product_name = product_name + ", Destiny: " + self.career_destiny.name + "."
-                                    if self.career_zone:
-                                        product_name = product_name + " " + self.career_zone.name + "."
-                                        if self.career_type:
-                                            product_name = product_name + " Career type: " + self.career_type.name + "."
-                                            if self.career_pax:
-                                                product_name = product_name + " " + self.career_pax.name + "."
+                    product_name = product_name + ", " + self.country_origin_id.name
+                    if self.career_origin:
+                        product_name = product_name + ". Origin: " + self.career_origin.name
+                        if self.career_destiny:
+                            product_name = product_name + ", Destiny: " + self.career_destiny.name + "."
+                            if self.career_zone:
+                                product_name = product_name + " " + self.career_zone.name + "."
+                                if self.career_type:
+                                    product_name = product_name + " Career type: " + self.career_type.name + "."
+                                    if self.career_pax:
+                                        product_name = product_name + " " + self.career_pax.name + "."
             
             self.name = product_name
             
