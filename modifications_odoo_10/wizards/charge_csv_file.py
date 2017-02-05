@@ -188,11 +188,11 @@ class ChargeCSVFile(models.Model):
 
         if career_pax_id:
             product_name = product_name + " " + career_pax_id.name + "."
-            
-        if career_zone_id:
-            product_name = product_name + " " + career_zone_id.name + "."
         
         product_name = product_name + " Career type: " + career_type_id.name + "."
+        
+        if career_zone_id:
+            product_name = product_name + " " + career_zone_id.name + "."
             
         if len(product_template_ids) > 0:
             raise AccessError('ERROR: ' + product_name)
