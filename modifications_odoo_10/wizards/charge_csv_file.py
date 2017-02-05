@@ -246,7 +246,7 @@ class ChargeCSVFile(models.Model):
         
         remove(csvfile_path)
         
-        raise AccessError('Here is the message: ' + string)
+        #raise AccessError('Here is the message: ' + string)
         
     """
     def create(self, cr, uid, vals, context=None):
