@@ -181,17 +181,17 @@ class ChargeCSVFile(models.Model):
         product_template_ids = self.env['product.template'].search(
             conditions, limit=1, order="id ASC")
 
-        product_name = city_origin_id.name + ", " + country_origin_id.name + \
-            ". Origin: " + career_origin_id.name + \
-            ", Destiny: " + career_destiny_id.name + "."
-
-        if career_pax_id:
-            product_name = product_name + " " + career_pax_id.name + "."
-        
-        product_name = product_name + " Career type: " + career_type_id.name + "."
+        product_name = country_origin_id.name + \
+            ". " + career_origin_id.name + \
+            " to " + career_destiny_id.name + "."
         
         if career_zone_id:
             product_name = product_name + " " + career_zone_id.name + "."
+        
+        product_name = product_name + " " + career_type_id.name + "."
+        
+        if career_pax_id:
+            product_name = product_name + " " + career_pax_id.name + "."
             
         if len(product_template_ids) > 0:
             raise AccessError('ERROR: ' + product_name)

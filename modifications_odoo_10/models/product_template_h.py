@@ -35,20 +35,18 @@ class ProductTemplate(models.Model):
     def check_change_code(self):
         if self.is_mpc_product:
             product_name = self.name
-            if self.city_origin_id:
-                product_name = self.city_origin_id.name
-                if self.country_origin_id:
-                    product_name = product_name + ", " + self.country_origin_id.name
-                    if self.career_origin:
-                        product_name = product_name + ". Origin: " + self.career_origin.name
-                        if self.career_destiny:
-                            product_name = product_name + ", Destiny: " + self.career_destiny.name + "."
-                            if self.career_zone:
-                                product_name = product_name + " " + self.career_zone.name + "."
-                                if self.career_type:
-                                    product_name = product_name + " Career type: " + self.career_type.name + "."
-                                    if self.career_pax:
-                                        product_name = product_name + " " + self.career_pax.name + "."
+            if self.country_origin_id:
+                product_name = self.country_origin_id.name
+                if self.career_origin:
+                    product_name = product_name + ". " + self.career_origin.name
+                    if self.career_destiny:
+                        product_name = product_name + " to " + self.career_destiny.name + "."
+                        if self.career_zone:
+                            product_name = product_name + " " + self.career_zone.name + "."
+                            if self.career_type:
+                                product_name = product_name + " " + self.career_type.name + "."
+                                if self.career_pax:
+                                    product_name = product_name + " " + self.career_pax.name + "."
             
             self.name = product_name
             
